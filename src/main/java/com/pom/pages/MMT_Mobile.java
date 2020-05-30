@@ -24,8 +24,33 @@ public class MMT_Mobile extends TestBase {
 		Logs.INFO("This is constructor - MMT");
 	}
 	
-	
-	
+
+	@AndroidFindBy (id = "com.makemytrip:id/iv_lotte_anim")
+	MobileElement gotItBtn;
+
+	@AndroidFindBy (id = "com.makemytrip:id/price_filter")
+	MobileElement priceFilterBtn;
+
+	@AndroidFindBy (id = "com.makemytrip:id/tv_title")
+	MobileElement activityTitle;
+
+	@AndroidFindBy (id = "com.makemytrip:id/tv_price_range")
+	MobileElement priceRangeTxt;
+
+	@AndroidFindBy (id = "com.makemytrip:id/price_seek_bar")
+	MobileElement priceBar;
+
+	@AndroidFindBy (id = "com.makemytrip:id/tv_apply")
+	MobileElement doneBtn;
+
+	@AndroidFindBy (id = "com.makemytrip:id/tvHotelName")
+	List<MobileElement> hotelNameTxt;
+
+
+
+
+
+
 
  	
 	
