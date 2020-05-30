@@ -6,6 +6,9 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.asserts.Assertion;
+
+import java.util.List;
 
 
 public class MMT_Mobile extends TestBase {
@@ -27,8 +30,8 @@ public class MMT_Mobile extends TestBase {
     private MobileElement mmtHotelsText;
     @AndroidFindBy(id = "com.makemytrip:id/city")
     private MobileElement mmtCityEditText;
-    @AndroidFindBy(xpath = "//androidx.recyclerview.widget.RecyclerView[@resource-id='com.makemytrip:id/rv_autosearch_locus' and @index=0]")
-    private MobileElement mmtCityList;
+    @AndroidFindBy(xpath = "//androidx.recyclerview.widget.RecyclerView/android.widget.RelativeLayout[@index=0]/android.widget.TextView")
+    private MobileElement mmtCityListItem;
     @AndroidFindBy(id = "com.makemytrip:id/checkIn_layout")
     private MobileElement mmtCheckInLayout;
     @AndroidFindBy(id = "com.makemytrip:id/checkOut_layout")
@@ -57,6 +60,43 @@ public class MMT_Mobile extends TestBase {
     private MobileElement mmtAddRoom;
     @AndroidFindBy(id = "com.makemytrip:id/btn_done")
     private MobileElement mmtDoneButton;
+    @AndroidFindBy(id = "com.makemytrip:id/removeRoom_expanded")
+    private MobileElement mmtRoomRemove;
+    @AndroidFindBy(id = "com.makemytrip:id/removeRoom_collapsed")
+    private List<MobileElement> mmtRoomRemoveList;
+
+    @AndroidFindBy(id = "com.makemytrip:id/cbAddOn")
+    private MobileElement mmtDonationCheckBox;
+    @AndroidFindBy(id = "com.makemytrip:id/btnShowAllHotels")
+    private MobileElement mmtHotelsContinueButton;
+    @AndroidFindBy(id = "com.makemytrip:id/rl_bnpl_option")
+    private MobileElement mmtHotelsBnplPaymentOption;
+    @AndroidFindBy(id = "com.makemytrip:id/rb_pay_in_full")
+    private MobileElement mmtHotelsFullPaymentOption;
+    @AndroidFindBy(id = "com.makemytrip:id/tv_proceed_payment")
+    private MobileElement mmtHotelsProceedPayment;
+    @AndroidFindBy(id = "com.makemytrip:id/ivDetailExpandOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageDetailsExpand;
+    @AndroidFindBy(id = "com.makemytrip:id/tvHotelNameOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageHotelName;
+    @AndroidFindBy(id = "com.makemytrip:id/tvHotelAddressOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageLocation;
+    @AndroidFindBy(id = "com.makemytrip:id/tvReviewCheckInOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageCheckIn;
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageCheckOut;
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckInDateOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageCheckInDate;
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutDateOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageCheckOutDate;
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckInTimeOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageCheckInTime;
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutTimeOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageCheckOutTime;
+    @AndroidFindBy(id = "com.makemytrip:id/tvTotalRoomsBookedOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageRoomcount;
+    @AndroidFindBy(id = "com.makemytrip:id/tvNumOfGuestOnThankYouPage")
+    private MobileElement mmtHotelsThankYouPageGuestcount;
 
 
     public MMT_Mobile() {
@@ -86,13 +126,20 @@ public class MMT_Mobile extends TestBase {
         waitForElement(mmtCityEditText, 5);
         click(mmtCityEditText);
         enterText(mmtEditText, cityName);
-        click(mmtCityList);
+        waitForElement(mmtCityListItem,5);
+        click(mmtCityListItem);
         waitForElement(mmtGuestLayout, 5);
 
     }
 
     public void MMT_Add_Guests(int noAdultGuests, int childGuests){
         click(mmtGuestLayout);
+        waitForElement(mmtAdultCount, 5);
+
+        if(mmtRoomRemoveList.size() > 1)
+            for(MobileElement removeBtn :mmtRoomRemoveList)
+                if(isDisplayed(removeBtn))
+                    click(removeBtn);
 
         waitForElement(mmtAdultCount, 5);
         setPassengerCount(mmtAdultCount,mmtAdultCountAdd,mmtAdultCountSubtract,noAdultGuests);
@@ -118,10 +165,27 @@ public class MMT_Mobile extends TestBase {
                 adultCount = Integer.parseInt(getText(locatorCount));
             }
         } else if(adultCount < totalPassenger) {
-            for (; adultCount < totalPassenger; adultCount++) {
+            for (; adultCount <= totalPassenger; adultCount++) {
                 click(locatorAdd);
                 adultCount = Integer.parseInt(getText(locatorCount));
             }
         }
+    }
+
+    public void MMT_Payment() {
+        waitForElement(mmtDonationCheckBox,5);
+        if(isChecked(mmtDonationCheckBox))
+            click(mmtDonationCheckBox);
+        click(mmtHotelsContinueButton);
+        if(isDisplayed(mmtHotelsBnplPaymentOption))
+            click(mmtHotelsFullPaymentOption);
+        click(mmtHotelsProceedPayment);
+        click(mmtHotelsThankYouPageDetailsExpand);
+    }
+
+    public void MMT_ThankYouPage_Assertions(String hotelName,String location){
+        Assertion asserts = new Assertion();
+        asserts.assertEquals(hotelName,mmtHotelsThankYouPageHotelName.getText());
+        asserts.assertEquals(location,mmtHotelsThankYouPageLocation.getText());
     }
 }
