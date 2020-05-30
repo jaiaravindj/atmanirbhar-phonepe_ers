@@ -40,6 +40,8 @@ public class MMTScenario_Mobile extends TestBase {
 //		mmt.MMT_Login();
 		mmt.MMT_Hotels_Select_City("Delhi");
 		mmt.MMT_Add_Guests(2,2);
+		mmt.MMT_Payment();
+
 		softAssert.assertAll();
 		endOfScript();
 	}
@@ -51,8 +53,8 @@ public class MMTScenario_Mobile extends TestBase {
 		Logs.INFO("***** Quitting Driver *****");
 		driver.quit();
 	}
-	
-	
-	
+
+
+
 
 }
