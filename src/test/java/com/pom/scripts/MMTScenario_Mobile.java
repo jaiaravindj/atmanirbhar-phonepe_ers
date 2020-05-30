@@ -38,7 +38,8 @@ public class MMTScenario_Mobile extends TestBase {
 
 		// start script
 //		mmt.MMT_Login();
-		mmt.MMT_Hotels();
+		mmt.MMT_Hotels_Select_City("Delhi");
+		mmt.MMT_Add_Guests(2,2);
 		softAssert.assertAll();
 		endOfScript();
 	}
