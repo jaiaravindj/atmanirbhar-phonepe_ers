@@ -1,48 +1,40 @@
 package com.pom.pages;
 
-import java.security.PrivateKey;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.pagefactory.HowToUseLocators;
-import org.jsoup.select.Evaluator;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.nativekey.AndroidKey;
-import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.support.PageFactory;
 
 
 public class MMT_Mobile extends TestBase {
     private String testEmail = "atmanirbhar.phonep.ers@gmail.com";
     private String password = "Sumed@Jai123";
+    private String cityName = "Delhi";
     TestBase testBase;
 
 
     @AndroidFindBy(id = "com.google.android.gms:id/cancel")
     private MobileElement gLoginDismiss;
     @AndroidFindBy(className = "android.widget.EditText")
-    private MobileElement loginEmailText;
-
+    private MobileElement mmtEditText;
     @AndroidFindBy(id = "com.makemytrip:id/btn_continue")
-    private MobileElement loginContinueButton;
-
+    private MobileElement mmtLoginContinueButton;
     @AndroidFindBy(id = "com.makemytrip:id/pwd_option")
-    private MobileElement loginViaPasswordButton;
-
+    private MobileElement mmtLoginViaPasswordButton;
     @AndroidFindBy(id = "com.makemytrip:id/universal_search")
     private MobileElement mmtUniversalSearchLayout;
-
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id='com.makemytrip:id/title' and @text='Hotels']")
-    private AndroidElement mmtHotelsText;
+    private MobileElement mmtHotelsText;
+    @AndroidFindBy(id = "com.makemytrip:id/city")
+    private MobileElement mmtCityEditText;
+    @AndroidFindBy(xpath = "//androidx.recyclerview.widget.RecyclerView[@resource-id='com.makemytrip:id/rv_autosearch_locus' and @index=0]")
+    private MobileElement mmtCityList;
+    @AndroidFindBy(id = "com.makemytrip:id/checkIn_layout")
+    private MobileElement mmtCheckInLayout;
+    @AndroidFindBy(id = "com.makemytrip:id/checkOut_layout")
+    private MobileElement mmtCheckOutLayout;
 
     public MMT_Mobile() {
 
@@ -52,23 +44,28 @@ public class MMT_Mobile extends TestBase {
     }
 
     public void MMT_Login() {
-        if (!testbase.isDisplayed(loginEmailText))
+        if (!testbase.isDisplayed(mmtLoginContinueButton))
             return;
         testBase.waitForElement(gLoginDismiss, 3);
         testBase.click(gLoginDismiss);
 
-        testBase.enterText(loginEmailText, testEmail);
-        testBase.click(loginContinueButton);
+        testBase.enterText(mmtEditText, testEmail);
+        testBase.click(mmtLoginContinueButton);
 
-        testBase.click(loginViaPasswordButton);
-        testBase.enterText(loginEmailText, password);
-        testBase.click(loginContinueButton);
+        testBase.click(mmtLoginViaPasswordButton);
+        testBase.enterText(mmtEditText, password);
+        testBase.click(mmtLoginContinueButton);
         testbase.waitForElement(mmtUniversalSearchLayout, 3);
     }
 
     public void MMT_Hotels() {
-        testbase.waitForElement(mmtHotelsText,5);
+        testbase.waitForElement(mmtHotelsText, 5);
         testbase.click(mmtHotelsText);
+        testbase.waitForElement(mmtCityEditText, 5);
+        testbase.click(mmtCityEditText);
+        testbase.enterText(mmtEditText, cityName);
+        testbase.click(mmtCityList);
+
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
