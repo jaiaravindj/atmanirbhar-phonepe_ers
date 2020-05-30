@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.pagefactory.HowToUseLocators;
+import org.jsoup.select.Evaluator;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
@@ -20,51 +24,56 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 public class MMT_Mobile extends TestBase {
     private String testEmail = "atmanirbhar.phonep.ers@gmail.com";
     private String password = "Sumed@Jai123";
-    TestBase testBase = new TestBase();
+    TestBase testBase;
 
-    private MobileElement gLoginDismiss() {
-        return driver.findElementById("com.google.android.gms:id/cancel");
-    }
 
-    private MobileElement loginEmailText() {
-        return driver.findElementByClassName("android.widget.EditText");
-    }
+    @AndroidFindBy(id = "com.google.android.gms:id/cancel")
+    private MobileElement gLoginDismiss;
+    @AndroidFindBy(className = "android.widget.EditText")
+    private MobileElement loginEmailText;
 
-    private MobileElement loginContinueButton() {
-        return driver.findElementById("com.makemytrip:id/btn_continue");
-    }
+    @AndroidFindBy(id = "com.makemytrip:id/btn_continue")
+    private MobileElement loginContinueButton;
 
-    private MobileElement loginViaPasswordButton() {
-        return driver.findElementById("com.makemytrip:id/pwd_option");
-    }
+    @AndroidFindBy(id = "com.makemytrip:id/pwd_option")
+    private MobileElement loginViaPasswordButton;
 
-    private MobileElement mmtUniversalSearchLayout(){
-        return driver.findElementById("com.makemytrip:id/universal_search");
-    }
+    @AndroidFindBy(id = "com.makemytrip:id/universal_search")
+    private MobileElement mmtUniversalSearchLayout;
 
+    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id='com.makemytrip:id/title' and @text='Hotels']")
+    private AndroidElement mmtHotelsText;
 
     public MMT_Mobile() {
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        testBase = new TestBase();
         Logs.INFO("This is constructor - MMT");
     }
 
     public void MMT_Login() {
+        if (!testbase.isDisplayed(loginEmailText))
+            return;
+        testBase.waitForElement(gLoginDismiss, 3);
+        testBase.click(gLoginDismiss);
 
-        testBase.waitForElement(gLoginDismiss(),3);
-        testBase.click(gLoginDismiss());
+        testBase.enterText(loginEmailText, testEmail);
+        testBase.click(loginContinueButton);
 
-        testBase.enterText(loginEmailText(), testEmail);
-        testBase.click(loginContinueButton());
-
-        testBase.click(loginViaPasswordButton());
-        testBase.enterText(loginEmailText(), password);
-        testBase.click(loginContinueButton());
-        testbase.waitForElement(mmtUniversalSearchLayout(),3);
+        testBase.click(loginViaPasswordButton);
+        testBase.enterText(loginEmailText, password);
+        testBase.click(loginContinueButton);
+        testbase.waitForElement(mmtUniversalSearchLayout, 3);
     }
 
     public void MMT_Hotels() {
-        testbase.click(mmtUniversalSearchLayout());
+        testbase.waitForElement(mmtHotelsText,5);
+        testbase.click(mmtHotelsText);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

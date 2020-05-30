@@ -42,7 +42,7 @@ public class TestBase extends ReadProperties implements IBaseInterface {
 
 
 	public TestBase() {
-
+		testbase = this;
 		prop = new ReadProperties();
 	}
 

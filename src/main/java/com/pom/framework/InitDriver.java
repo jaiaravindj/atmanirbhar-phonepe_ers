@@ -81,6 +81,7 @@ public class InitDriver {
 			capabilities.setCapability("autoGrantPermissions", true);
 			capabilities.setCapability("unicodekeyboard", true);
 			capabilities.setCapability("resetkeyboard", true);
+			capabilities.setCapability("noReset", true);
 
 			serverUrl = readProperties.getProperties("serverUrl");
 			driver = new AndroidDriver<MobileElement>(new URL(serverUrl), capabilities);
