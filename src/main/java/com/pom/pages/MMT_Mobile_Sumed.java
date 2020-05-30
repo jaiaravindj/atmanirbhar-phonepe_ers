@@ -1,26 +1,17 @@
 package com.pom.pages;
 
-import java.security.PrivateKey;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.pagefactory.HowToUseLocators;
-import org.jsoup.select.Evaluator;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.nativekey.AndroidKey;
-import io.appium.java_client.android.nativekey.KeyEvent;
+import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 
-public class MMT_Mobile extends TestBase {
+public class MMT_Mobile_Sumed extends TestBase {
 
     private String testEmail = "atmanirbhar.phonep.ers@gmail.com";
     private String password = "Sumed@Jai123";
@@ -29,6 +20,7 @@ public class MMT_Mobile extends TestBase {
 
     @AndroidFindBy(id = "com.google.android.gms:id/cancel")
     private MobileElement gLoginDismiss;
+
     @AndroidFindBy(className = "android.widget.EditText")
     private MobileElement loginEmailText;
 
@@ -68,7 +60,7 @@ public class MMT_Mobile extends TestBase {
 
 
 
-    public MMT_Mobile() {
+    public MMT_Mobile_Sumed() {
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
         testBase = new TestBase();
@@ -77,31 +69,6 @@ public class MMT_Mobile extends TestBase {
 
 
 
-
-    public void MMT_Login() {
-        if (!testbase.isDisplayed(loginEmailText))
-            return;
-        testBase.waitForElement(gLoginDismiss, 3);
-        testBase.click(gLoginDismiss);
-
-        testBase.enterText(loginEmailText, testEmail);
-        testBase.click(loginContinueButton);
-
-        testBase.click(loginViaPasswordButton);
-        testBase.enterText(loginEmailText, password);
-        testBase.click(loginContinueButton);
-        testbase.waitForElement(mmtUniversalSearchLayout, 3);
-    }
-
-    public void MMT_Hotels() {
-        testbase.waitForElement(mmtHotelsText,5);
-        testbase.click(mmtHotelsText);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 
