@@ -6,11 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="atmanirbhar-phonepe_ers" />
+        <module name="MMT_HeadspinHackathon" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="atmanirbhar-phonepe_ers" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
