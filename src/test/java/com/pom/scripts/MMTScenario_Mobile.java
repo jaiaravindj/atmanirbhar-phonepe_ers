@@ -37,7 +37,8 @@ public class MMTScenario_Mobile extends TestBase {
 	public void mmtScriptAppium() throws Exception {
 
 		// start script
-		
+//		mmt.MMT_Login();
+		mmt.MMT_Hotels();
 		softAssert.assertAll();
 		endOfScript();
 	}
