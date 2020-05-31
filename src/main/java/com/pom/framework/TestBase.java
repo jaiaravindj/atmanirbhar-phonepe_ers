@@ -512,6 +512,11 @@ public class TestBase extends ReadProperties implements IBaseInterface {
 		}
 	}
 
+	public void clickByXY(int x, int y) {
+		new TouchAction(driver).press(PointOption.point(x, y)).waitAction().release().perform();
+	}
+
+
 	@SuppressWarnings({ "rawtypes" })
 	public void clickByXY(double x, double y) {
 
@@ -597,20 +602,22 @@ public class TestBase extends ReadProperties implements IBaseInterface {
 		}
 	}
 	
-	public static boolean containsInList(List<WebElement> element, String comparator) {
+	public static boolean containsInList(List<MobileElement> element, String comparator) {
 
 		for(WebElement iterator : element) {
 			if( iterator.getText().contains(comparator) || iterator.getText().equalsIgnoreCase(comparator) ) {
+				Logs.INFO("Text being compared in list - " + iterator.getText());
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public static boolean selectInList(List<WebElement> element, String comparator) {
+	public static boolean selectInList(List<MobileElement> element, String comparator) {
 		
-		for(WebElement iterator : element) {
+		for(MobileElement iterator : element) {
 			if(iterator.getText().contains(comparator) || iterator.getText().equalsIgnoreCase(comparator)) {
+				Logs.INFO("Text being selected in list - " + iterator.getText());
 				iterator.click();
 				return true;
 			}

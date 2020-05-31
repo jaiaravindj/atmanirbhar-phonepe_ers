@@ -82,6 +82,7 @@ public class InitDriver {
 			capabilities.setCapability("unicodekeyboard", true);
 			capabilities.setCapability("resetkeyboard", true);
 			capabilities.setCapability("noReset", true);
+			capabilities.setCapability("newCommandTimeout", 600);
 
 			serverUrl = readProperties.getProperties("serverUrl");
 			driver = new AndroidDriver<MobileElement>(new URL(serverUrl), capabilities);
