@@ -235,7 +235,7 @@ public class MMT_Mobile_BookingFlow extends TestBase {
     }
 
     public void setUserRatingFilter(String userRating) {
-        Logs.INFO("Desired User Rating - " + userRating);
+            Logs.INFO("Desired User Rating - " + userRating);
         waitForElement(userRatingTxt.get(0), DEFAULT_TIME);
         selectInList(userRatingTxt, userRating);
     }

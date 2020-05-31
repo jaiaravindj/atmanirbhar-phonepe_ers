@@ -40,7 +40,7 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     @AndroidFindBy(id = "com.makemytrip:id/pwd_option")
     MobileElement mmtLoginViaPasswordButton;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id='com.makemytrip:id/title' and @text='Hotels']")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.makemytrip:id/title\").text(\"Hotels\")")
     MobileElement mmtHotelsText;
 
     @AndroidFindBy(id = "com.makemytrip:id/city")
