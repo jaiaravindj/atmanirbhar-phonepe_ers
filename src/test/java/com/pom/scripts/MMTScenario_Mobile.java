@@ -41,8 +41,8 @@ public class MMTScenario_Mobile extends TestBase {
 
 		// start script
 		Logs.INFO("Login into the App");
-//		mmt.dismissGLoginPopup();
-//
+		mmt.dismissGLoginPopup();
+
 //		mmt.enterLoginEmail("atmanirbhar.phonep.ers@gmail.com");
 //		mmt.clickContinueButton();
 //		mmt.enterPassword("Sumed@Jai123");
@@ -51,7 +51,7 @@ public class MMTScenario_Mobile extends TestBase {
 
 		mmt.goToHotelsSectino();
 		mmt.selectCity("Delhi");
-		softAssert.assertTrue(mmt.getSelectedCityName().contains(readProp("Delhi, India")), "User selected city Delhi, India");
+		softAssert.assertTrue(mmt.getSelectedCityName().contains(readProp("cityNameFull")), "User selected city Delhi, India");
 
 		mmt.goToGuestPage();
 		mmt.removeExistingGuest();
@@ -65,8 +65,8 @@ public class MMTScenario_Mobile extends TestBase {
 		mmt.setChildGuest(2);
 
 		mmt.clickDoneButton();
-		softAssert.assertTrue(mmt.getGuestCount().contains(readProp("08")), "Number Of Guests - 08");
-		softAssert.assertTrue(mmt.getRoomCount().contains(readProp("08")), "Number Of Guests - 08");
+		softAssert.assertTrue(mmt.getGuestCount().contains(readProp("totalGuests")), "Number Of Guests - 08");
+		softAssert.assertTrue(mmt.getRoomCount().contains(readProp("totalGuests")), "Number Of Guests - 08");
 		mmt.clickSearchButton();
 
 		mmt2.clickOnGotItBtn();

@@ -3,6 +3,7 @@ package com.pom.pages;
 import java.security.PrivateKey;
 import java.util.*;
 
+import com.oracle.tools.packager.Log;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.HowToUseLocators;
 import org.jsoup.select.Evaluator;
@@ -200,12 +201,14 @@ public class MMT_Mobile extends TestBase {
 
     public String getSelectedCityName() {
         waitForElement(mmtCityEditText, DEFAULT_TIME);
+        Log.info("City is selected" + mmtCityEditText.getText());
         return getText(mmtCityEditText);
     }
 
     public void goToGuestPage() {
         waitForElement(mmtGuestLayout, DEFAULT_TIME);
         click(mmtGuestLayout);
+        Log.info("User in Guest Page");
     }
 
     public void removeExistingGuest() {
@@ -213,33 +216,41 @@ public class MMT_Mobile extends TestBase {
 
         if (mmtRoomRemoveList.size() > 1)
             for (MobileElement removeBtn : mmtRoomRemoveList)
-                if (isDisplayed(removeBtn))
+                if (isDisplayed(removeBtn)) {
                     click(removeBtn);
+                    Log.info("Removed existing guest details");
+                }
+
     }
 
     public void setAduldGuest(int noAdultGuests) {
         waitForElement(mmtAdultCount, DEFAULT_TIME);
         setPassengerCount(mmtAdultCount, mmtAdultCountAdd, mmtAdultCountSubtract, noAdultGuests);
+        Log.info("Added Adult Guests");
     }
 
     public void setChildGuest(int childGuests){
         waitForElement(mmtChildCount, DEFAULT_TIME);
         setPassengerCount(mmtChildCount, mmtChildCountAdd, mmtChildCountSubtract, childGuests);
+        Log.info("Added Child Guests");
     }
 
     public void addRoom() {
         waitForElement(mmtAddRoom,DEFAULT_TIME);
         click(mmtAddRoom);
+        Log.info("Added Extra Rooms");
     }
 
     public void clickDoneButton(){
         waitForElement(mmtDoneButton,DEFAULT_TIME);
         click(mmtDoneButton);
+        Log.info("Done button is clicked");
     }
 
     public void clickSearchButton() {
         waitForElement(mmtSearchButton, 5);
         click(mmtSearchButton);
+        Log.info("Search button is clicked");
     }
 
     public String getGuestCount() {
