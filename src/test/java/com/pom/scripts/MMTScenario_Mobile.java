@@ -50,8 +50,9 @@ public class MMTScenario_Mobile extends TestBase {
 		mmt.checkIfOnHomeScreen();
 
 		mmt.goToHotelsSectino();
-		mmt.selectCity("Delhi");
-		softAssert.assertTrue(mmt.getSelectedCityName().contains(readProp("cityNameFull")), "User selected city Delhi, India");
+		mmt.selectCity(readProp("cityName"));
+		softAssert.assertTrue(mmt.getSelectedCityName().contains(readProp("cityNameFull")),
+				"User selected city "+readProp("cityNameFull"));
 
 		mmt.goToGuestPage();
 		mmt.removeExistingGuest();
