@@ -5,6 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
 import io.appium.java_client.MobileElement;
+
 import java.util.List;
 
 
@@ -18,9 +19,11 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     }
 
 
-
     @AndroidFindBy(id = "com.google.android.gms:id/cancel")
     MobileElement gLoginDismiss;
+
+    @AndroidFindBy(id = "com.makemytrip:id/skip")
+    MobileElement loginPageSkip;
 
     @AndroidFindBy(className = "android.widget.EditText")
     MobileElement mmtEditText;
@@ -31,10 +34,10 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.makemytrip:id/tv_title\").text(\"Login/Sign-up now\")")
     MobileElement loginDrawerBtn;
 
-    @AndroidFindAll ( {
+    @AndroidFindAll({
             @AndroidBy(id = "com.makemytrip:id/btn_continue"),
             @AndroidBy(id = "com.makemytrip:id/btn_submit")
-    } )
+    })
     MobileElement mmtLoginContinueButton;
 
     @AndroidFindBy(id = "com.makemytrip:id/pwd_option")
@@ -122,12 +125,14 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     MobileElement homePageBottomBar;
 
 
-
     public void dismissGLoginPopup() {
-        if (!isDisplayed(mmtLoginContinueButton))
-            return;
         waitForElement(gLoginDismiss, DEFAULT_TIME);
         click(gLoginDismiss);
+    }
+
+    public void clickLoginSkipButtonp() {
+        if (isDisplayed(loginPageSkip))
+            click(loginPageSkip);
     }
 
     public void clickMenuDrawer() {
@@ -211,7 +216,7 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
         Logs.INFO("Added Adult Guests - " + noAdultGuests);
     }
 
-    public void setChildGuest(int childGuests){
+    public void setChildGuest(int childGuests) {
         waitForElement(mmtChildCount, DEFAULT_TIME);
         setPassengerCount(mmtChildCount, mmtChildCountAdd, mmtChildCountSubtract, childGuests);
         Logs.INFO("Added Child Guests - " + childGuests);
@@ -232,7 +237,7 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
         return date;
     }
 
-    public void clickDoneButton(){
+    public void clickDoneButton() {
         waitForElement(mmtDoneButton, DEFAULT_TIME);
         click(mmtDoneButton);
         Logs.INFO("Done button clicked");
@@ -241,10 +246,17 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     public void selectTripType(String tripType) {
         waitForElement(mmtSearchButton, DEFAULT_TIME);
         switch (tripType) {
-            case "Business": click(businessTripTypeCheckBx);    break;
-            case "Family": click(familyTripTypeCheckBx);    break;
-            case "Romantic": click(romanticTripType);   break;
-            default: Logs.ERROR("Invalid Trip Type");
+            case "Business":
+                click(businessTripTypeCheckBx);
+                break;
+            case "Family":
+                click(familyTripTypeCheckBx);
+                break;
+            case "Romantic":
+                click(romanticTripType);
+                break;
+            default:
+                Logs.ERROR("Invalid Trip Type");
         }
         Logs.INFO(tripType + " Trip Type selected");
     }

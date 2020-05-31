@@ -38,13 +38,14 @@ public class MMTScenario_Mobile extends TestBase {
 
 		Logs.INFO("LOGIN TO THE APP");
 		mmt1.dismissGLoginPopup();
-		mmt1.clickMenuDrawer();
-		mmt1.clickLoginSignUpBtn();
+		mmt1.clickLoginSkipButtonp();
+//		mmt1.clickMenuDrawer();
+//		mmt1.clickLoginSignUpBtn();
 
-		mmt1.enterLoginEmail(readProp("username"));
-		mmt1.clickContinueButton();
-		mmt1.enterPassword(readProp("password"));
-		mmt1.clickContinueButton();
+//		mmt1.enterLoginEmail(readProp("username"));
+//		mmt1.clickContinueButton();
+//		mmt1.enterPassword(readProp("password"));
+//		mmt1.clickContinueButton();
 		mmt1.checkIfOnHomeScreen();
 
 		Logs.INFO("SEARCH HOTEL FOR GIVEN PARAMETERS");
