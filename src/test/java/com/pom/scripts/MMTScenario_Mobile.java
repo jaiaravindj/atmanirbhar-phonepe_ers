@@ -40,7 +40,7 @@ public class MMTScenario_Mobile extends TestBase {
 	public void mmtScriptAppium() throws Exception {
 
 		// start script
-		Logs.INFO("Login into the App");
+		Logs.INFO("LOGIN TO THE APP");
 		mmt.dismissGLoginPopup();
 
 //		mmt.enterLoginEmail("atmanirbhar.phonep.ers@gmail.com");
@@ -59,15 +59,15 @@ public class MMTScenario_Mobile extends TestBase {
 
 		mmt.setAduldGuest(2);
 		mmt.setChildGuest(2);
-
 		mmt.addRoom();
-
 		mmt.setAduldGuest(2);
 		mmt.setChildGuest(2);
 
 		mmt.clickDoneButton();
-		softAssert.assertTrue(mmt.getGuestCount().contains(readProp("totalGuests")), "Number Of Guests - 08");
-		softAssert.assertTrue(mmt.getRoomCount().contains(readProp("totalGuests")), "Number Of Guests - 08");
+		softAssert.assertTrue(mmt.getGuestCount().contains(readProp("totalGuests")), "Number Of Guests - "+readProp("totalGuests"));
+		softAssert.assertTrue(mmt.getRoomCount().contains(readProp("noOfRooms")), "Number Of Rooms - "+readProp("noOfRooms"));
+
+		mmt.selectTripType(readProp("tripType"));
 		mmt.clickSearchButton();
 
 		mmt2.clickOnGotItBtn();

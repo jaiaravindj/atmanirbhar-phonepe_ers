@@ -49,7 +49,7 @@ public class TestBase extends ReadProperties implements IBaseInterface {
 
 		if (driver == null || driver.getSessionId() == null) {
 
-			Logs.INFO("Appium Driver is null.. Initialising the Web Driver");
+			Logs.INFO("Appium Driver is null.. Initialising the Android Driver");
 			initDriver = new InitDriver();
 
 			if (osType.equalsIgnoreCase("iOS")) {

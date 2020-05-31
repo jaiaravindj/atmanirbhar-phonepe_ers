@@ -39,7 +39,7 @@ public class MMT_Mobile_Sumed extends TestBase {
     @AndroidFindBy (id = "com.makemytrip:id/tvHotelName")
     List<MobileElement> hotelNameListTxt;
 
-    @AndroidFindBy (uiAutomator = "new UiScrollable(new UiSelector().resourceId('com.makemytrip:id/tvHotelName').index(4))")
+    @AndroidFindBy (uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().resourceId(\"com.makemytrip:id/tvHotelName\").index(4));")
     MobileElement hotelName_5Txt;
 
     @AndroidFindBy (id = "com.makemytrip:id/iv_lotte_anim")
@@ -235,7 +235,7 @@ public class MMT_Mobile_Sumed extends TestBase {
     }
 
     public boolean assertFilterApplied(String filterName) {
-        waitForElement(hotelNameListTxt.get(0), DEFAULT_TIME);
+        waitForElement(hotelNameTxt, DEFAULT_TIME);
         waitForElement(assertFilterNameTxt.get(0), DEFAULT_TIME);
         return containsInList(assertFilterNameTxt, filterName);
     }
@@ -250,7 +250,7 @@ public class MMT_Mobile_Sumed extends TestBase {
 
         boolean flag = false;
         int count = 0;
-        String hotelName1="1", hotelName2="2";
+        String hotelName1="1", hotelName2;
         waitForElement(hotelNameListTxt.get(0), DEFAULT_TIME);
 
         while(!flag) {
@@ -414,15 +414,7 @@ public class MMT_Mobile_Sumed extends TestBase {
                 count++;
             }
         }
-
         Logs.INFO("No. of Special Requests selected - " + count);
-        count = 0;
-        for(MobileElement element: requestCheckBxList) {
-            Logs.INFO("isChecked - " + Boolean.getBoolean(element.getAttribute("checked")));
-            if(Boolean.getBoolean(element.getAttribute("checked")))
-                count++;
-        }
-        Logs.INFO("No. of Special Requests CheckBoxes selected - " + count);
 
         click(doneOnSpecialRequestBtn);
         Logs.INFO("Done button on Special Requests page clicked");

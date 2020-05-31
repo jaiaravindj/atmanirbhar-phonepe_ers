@@ -2,6 +2,8 @@ package com.pom.pages;
 
 import java.security.PrivateKey;
 import java.util.*;
+
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.HowToUseLocators;
 import org.jsoup.select.Evaluator;
@@ -87,13 +89,22 @@ public class MMT_Mobile extends TestBase {
     @AndroidFindBy(id = "com.makemytrip:id/btn_done")
     MobileElement mmtDoneButton;
 
-    @AndroidFindBy(id = "com.makemytrip:id/removeRoom_expanded")
-    MobileElement mmtRoomRemove;
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().text(\"ROOM 1\"));")
+    MobileElement room1Txt;
 
     @AndroidFindBy(id = "com.makemytrip:id/removeRoom_collapsed")
     List<MobileElement> mmtRoomRemoveList;
 
-    @AndroidFindBy(id = "com.makemytrip:id/cbAddOn")
+    @AndroidFindBy(id = "com.makemytrip:id/rb_travel_type_family")
+    MobileElement familyTripTypeCheckBx;
+
+    @AndroidFindBy(id = "com.makemytrip:id/rb_travel_type_business")
+    MobileElement businessTripTypeCheckBx;
+
+    @AndroidFindBy(id = "com.makemytrip:id/rb_travel_type_leisure")
+    MobileElement romanticTripType;
+
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().resourceId(\"com.makemytrip:id/cbAddOn\"));")
     MobileElement mmtDonationCheckBox;
 
     @AndroidFindBy(id = "com.makemytrip:id/btnShowAllHotels")
@@ -147,6 +158,9 @@ public class MMT_Mobile extends TestBase {
     @AndroidFindBy(id = "com.makemytrip:id/room_count")
     MobileElement hotelsRoomCount;
 
+    @AndroidFindBy(id = "com.makemytrip:id/guest_count")
+    MobileElement hotelsGuestCount;
+
 
     public MMT_Mobile() {
 
@@ -185,7 +199,7 @@ public class MMT_Mobile extends TestBase {
     public void goToHotelsSectino() {
         waitForElement(mmtHotelsText, DEFAULT_TIME);
         click(mmtHotelsText);
-        Logs.INFO("Password entered for Login");
+        Logs.INFO("Hotels button clicked");
     }
 
     public void selectCity(String cityName) {
@@ -210,13 +224,16 @@ public class MMT_Mobile extends TestBase {
     }
 
     public void removeExistingGuest() {
-        waitForElement(mmtAdultCount, DEFAULT_TIME);
 
-        if (mmtRoomRemoveList.size() > 1)
+        scrollingUp();
+        waitForElement(room1Txt, DEFAULT_TIME);
+        Logs.INFO("No of Rooms pre-selected - " + mmtRoomRemoveList.size());
+        if (mmtRoomRemoveList.size() > 0)
             for (MobileElement removeBtn : mmtRoomRemoveList)
                 if (isDisplayed(removeBtn)) {
                     click(removeBtn);
                     Logs.INFO("Removed existing guest details");
+                    waitForElement(room1Txt, DEFAULT_TIME);
                 }
 
     }
@@ -234,35 +251,49 @@ public class MMT_Mobile extends TestBase {
     }
 
     public void addRoom() {
-        waitForElement(mmtAddRoom,DEFAULT_TIME);
+        waitForElement(mmtAddRoom, DEFAULT_TIME);
         click(mmtAddRoom);
-        Logs.INFO("Added Extra Rooms");
+        Logs.INFO("Added Another Room button clicked");
     }
 
     public void clickDoneButton(){
-        waitForElement(mmtDoneButton,DEFAULT_TIME);
+        waitForElement(mmtDoneButton, DEFAULT_TIME);
         click(mmtDoneButton);
-        Logs.INFO("Done button is clicked");
+        Logs.INFO("Done button clicked");
+    }
+
+    public void selectTripType(String tripType) {
+        waitForElement(mmtSearchButton, DEFAULT_TIME);
+        switch (tripType) {
+            case "Business": click(businessTripTypeCheckBx);    break;
+            case "Family": click(familyTripTypeCheckBx);    break;
+            case "Romantic": click(romanticTripType);   break;
+            default: Logs.ERROR("Invalid Trip Type");
+        }
+        Logs.INFO(tripType + " Trip Type selected");
     }
 
     public void clickSearchButton() {
         waitForElement(mmtSearchButton, 5);
         click(mmtSearchButton);
-        Logs.INFO("Search button is clicked");
+        Logs.INFO("Search button clicked");
     }
 
     public String getGuestCount() {
-        waitForElement(mmtGuestLayout,DEFAULT_TIME);
-        return getText(mmtGuestLayout);
+        waitForElement(hotelsGuestCount, DEFAULT_TIME);
+        String guestCount = getText(hotelsGuestCount);
+        Logs.INFO("Guest Count on Guest Layout - " + guestCount);
+        return guestCount;
     }
 
     public String getRoomCount() {
-        waitForElement(hotelsRoomCount,DEFAULT_TIME);
-        return getText(hotelsRoomCount);
+        waitForElement(hotelsRoomCount, DEFAULT_TIME);
+        String roomCount = getText(hotelsRoomCount);
+        Logs.INFO("Room Count on Guest Layout - " + roomCount);
+        return roomCount;
     }
 
-
-    // Will Add or Subtract guests count according to required number.
+    /* Will Add or Subtract guests count according to required number */
     private void setPassengerCount(MobileElement locatorCount, MobileElement locatorAdd, MobileElement locatorSubtract, int totalPassenger) {
         int adultCount = Integer.parseInt(getText(locatorCount));
         if (adultCount > totalPassenger) {
@@ -279,7 +310,8 @@ public class MMT_Mobile extends TestBase {
     }
 
     public void MMT_Payment() {
-        waitForElement(mmtDonationCheckBox, 5);
+
+        waitForElement(mmtDonationCheckBox, DEFAULT_TIME);
         if (isChecked(mmtDonationCheckBox))
             click(mmtDonationCheckBox);
         click(mmtHotelsContinueButton);
