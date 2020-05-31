@@ -1,12 +1,8 @@
 package com.pom.utilities;
 
-import com.oracle.tools.packager.Log;
-import com.pom.framework.IBaseInterface;
 import com.pom.framework.ReadProperties;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.http.ContentType.*;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
@@ -19,7 +15,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static javax.swing.text.DefaultStyledDocument.ElementSpec.ContentType;
 
 public class HeadSpinHelper {
 

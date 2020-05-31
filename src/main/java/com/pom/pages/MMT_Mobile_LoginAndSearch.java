@@ -1,27 +1,24 @@
 package com.pom.pages;
 
-import java.security.PrivateKey;
-import java.util.*;
-
-import com.oracle.tools.packager.Log;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.pagefactory.HowToUseLocators;
-import org.jsoup.select.Evaluator;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import io.appium.java_client.pagefactory.*;
 import org.openqa.selenium.support.PageFactory;
 import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.asserts.Assertion;
-
 import java.util.List;
 
 
-public class MMT_Mobile extends TestBase {
+public class MMT_Mobile_LoginAndSearch extends TestBase {
+
+
+    public MMT_Mobile_LoginAndSearch() {
+
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        Logs.INFO("This is constructor - MMT");
+    }
+
+
 
     @AndroidFindBy(id = "com.google.android.gms:id/cancel")
     MobileElement gLoginDismiss;
@@ -29,7 +26,16 @@ public class MMT_Mobile extends TestBase {
     @AndroidFindBy(className = "android.widget.EditText")
     MobileElement mmtEditText;
 
-    @AndroidFindBy(id = "com.makemytrip:id/btn_continue")
+    @AndroidFindBy(id = "com.makemytrip:id/drawer")
+    MobileElement menuDrawerBtn;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.makemytrip:id/tv_title\").text(\"Login/Sign-up now\")")
+    MobileElement loginDrawerBtn;
+
+    @AndroidFindAll ( {
+            @AndroidBy(id = "com.makemytrip:id/btn_continue"),
+            @AndroidBy(id = "com.makemytrip:id/btn_submit")
+    } )
     MobileElement mmtLoginContinueButton;
 
     @AndroidFindBy(id = "com.makemytrip:id/pwd_option")
@@ -47,17 +53,23 @@ public class MMT_Mobile extends TestBase {
     @AndroidFindBy(xpath = "//androidx.recyclerview.widget.RecyclerView/android.widget.RelativeLayout[@index=0]/android.widget.TextView")
     MobileElement mmtCityListItem;
 
-    @AndroidFindBy(id = "com.makemytrip:id/checkIn_layout")
-    MobileElement mmtCheckInLayout;
+    @AndroidFindBy(id = "com.makemytrip:id/checkInWeek")
+    MobileElement mmtCheckInWeek;
 
-    @AndroidFindBy(id = "com.makemytrip:id/checkOut_layout")
-    MobileElement mmtCheckOutLayout;
+    @AndroidFindBy(id = "com.makemytrip:id/checkInDate")
+    MobileElement mmtCheckInDate;
 
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckInDate")
-    MobileElement mmtCheckinDate;
+    @AndroidFindBy(id = "com.makemytrip:id/checkInMonthYear")
+    MobileElement mmtCheckInMonth;
 
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckInMonth")
-    MobileElement mmtCheckinMonth;
+    @AndroidFindBy(id = "com.makemytrip:id/checkOutWeek")
+    MobileElement mmtCheckOutWeek;
+
+    @AndroidFindBy(id = "com.makemytrip:id/checkOutDate")
+    MobileElement mmtCheckOutDate;
+
+    @AndroidFindBy(id = "com.makemytrip:id/checkOutMonthYear")
+    MobileElement mmtCheckOutMonth;
 
     @AndroidFindBy(id = "com.makemytrip:id/search_button")
     MobileElement mmtSearchButton;
@@ -89,85 +101,55 @@ public class MMT_Mobile extends TestBase {
     @AndroidFindBy(id = "com.makemytrip:id/btn_done")
     MobileElement mmtDoneButton;
 
-    @AndroidFindBy(id = "com.makemytrip:id/removeRoom_expanded")
-    MobileElement mmtRoomRemove;
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().text(\"ROOM 1\"));")
+    MobileElement room1Txt;
 
     @AndroidFindBy(id = "com.makemytrip:id/removeRoom_collapsed")
     List<MobileElement> mmtRoomRemoveList;
 
-    @AndroidFindBy(id = "com.makemytrip:id/cbAddOn")
-    MobileElement mmtDonationCheckBox;
+    @AndroidFindBy(id = "com.makemytrip:id/rb_travel_type_family")
+    MobileElement familyTripTypeCheckBx;
 
-    @AndroidFindBy(id = "com.makemytrip:id/btnShowAllHotels")
-    MobileElement mmtHotelsContinueButton;
+    @AndroidFindBy(id = "com.makemytrip:id/rb_travel_type_business")
+    MobileElement businessTripTypeCheckBx;
 
-    @AndroidFindBy(id = "com.makemytrip:id/rl_bnpl_option")
-    MobileElement mmtHotelsBnplPaymentOption;
-
-    @AndroidFindBy(id = "com.makemytrip:id/rb_pay_in_full")
-    MobileElement mmtHotelsFullPaymentOption;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tv_proceed_payment")
-    MobileElement mmtHotelsProceedPayment;
-
-    @AndroidFindBy(id = "com.makemytrip:id/ivDetailExpandOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageDetailsExpand;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvHotelNameOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageHotelName;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvHotelAddressOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageLocation;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvReviewCheckInOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckIn;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckOut;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckInDateOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckInDate;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutDateOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckOutDate;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckInTimeOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckInTime;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutTimeOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckOutTime;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvTotalRoomsBookedOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageRoomcount;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvNumOfGuestOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageGuestcount;
-
-    @AndroidFindBy(id = "com.makemytrip:id/rv_bottom_bar")
-    MobileElement homePageBottomBar;
+    @AndroidFindBy(id = "com.makemytrip:id/rb_travel_type_leisure")
+    MobileElement romanticTripType;
 
     @AndroidFindBy(id = "com.makemytrip:id/room_count")
     MobileElement hotelsRoomCount;
 
+    @AndroidFindBy(id = "com.makemytrip:id/guest_count")
+    MobileElement hotelsGuestCount;
 
-    public MMT_Mobile() {
+    @AndroidFindBy(id = "com.makemytrip:id/rv_bottom_bar")
+    MobileElement homePageBottomBar;
 
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-        Logs.INFO("This is constructor - MMT");
-    }
 
 
     public void dismissGLoginPopup() {
-        if (!testbase.isDisplayed(mmtLoginContinueButton))
+        if (!isDisplayed(mmtLoginContinueButton))
             return;
         waitForElement(gLoginDismiss, DEFAULT_TIME);
         click(gLoginDismiss);
     }
 
+    public void clickMenuDrawer() {
+        waitForElement(menuDrawerBtn, DEFAULT_TIME);
+        click(menuDrawerBtn);
+        Logs.INFO("Menu buttn clicked");
+    }
+
+    public void clickLoginSignUpBtn() {
+        waitForElement(loginDrawerBtn, DEFAULT_TIME);
+        click(loginDrawerBtn);
+        Logs.INFO("Login/Sign-up now button clicked");
+    }
+
     public void enterLoginEmail(String testEmail) {
         waitForElement(mmtEditText, DEFAULT_TIME);
         enterText(mmtEditText, testEmail);
-        Logs.INFO("Email entered for Login");
+        Logs.INFO("Email entered for Login - " + testEmail);
     }
 
     public void enterPassword(String password) {
@@ -184,10 +166,10 @@ public class MMT_Mobile extends TestBase {
         Logs.INFO(getText(mmtLoginContinueButton) + " button clicked");
     }
 
-    public void goToHotelsSectino() {
+    public void goToHotelsSection() {
         waitForElement(mmtHotelsText, DEFAULT_TIME);
         click(mmtHotelsText);
-        Logs.INFO("Password entered for Login");
+        Logs.INFO("Hotels button clicked");
     }
 
     public void selectCity(String cityName) {
@@ -197,74 +179,101 @@ public class MMT_Mobile extends TestBase {
         waitForElement(mmtCityListItem, DEFAULT_TIME);
         click(mmtCityListItem);
         waitForElement(mmtGuestLayout, DEFAULT_TIME);
+        Logs.INFO("Selected City - " + cityName);
     }
 
     public String getSelectedCityName() {
         waitForElement(mmtCityEditText, DEFAULT_TIME);
-        Log.info("City is selected" + mmtCityEditText.getText());
+        Logs.INFO("City is selected" + mmtCityEditText.getText());
         return getText(mmtCityEditText);
     }
 
     public void goToGuestPage() {
         waitForElement(mmtGuestLayout, DEFAULT_TIME);
         click(mmtGuestLayout);
-        Log.info("User in Guest Page");
+        Logs.INFO("User in Guest Page");
     }
 
     public void removeExistingGuest() {
-        waitForElement(mmtAdultCount, DEFAULT_TIME);
 
-        if (mmtRoomRemoveList.size() > 1)
+        scrollingUp();
+        waitForElement(room1Txt, DEFAULT_TIME);
+        Logs.INFO("No of Rooms pre-selected - " + mmtRoomRemoveList.size());
+        if (mmtRoomRemoveList.size() > 0)
             for (MobileElement removeBtn : mmtRoomRemoveList)
                 if (isDisplayed(removeBtn)) {
                     click(removeBtn);
-                    Log.info("Removed existing guest details");
+                    Logs.INFO("Removed pre-selected guest details");
+                    waitForElement(room1Txt, DEFAULT_TIME);
                 }
 
     }
 
-    public void setAduldGuest(int noAdultGuests) {
+    public void setAdultGuest(int noAdultGuests) {
         waitForElement(mmtAdultCount, DEFAULT_TIME);
         setPassengerCount(mmtAdultCount, mmtAdultCountAdd, mmtAdultCountSubtract, noAdultGuests);
-        Log.info("Added Adult Guests");
+        Logs.INFO("Added Adult Guests - " + noAdultGuests);
     }
 
     public void setChildGuest(int childGuests){
         waitForElement(mmtChildCount, DEFAULT_TIME);
         setPassengerCount(mmtChildCount, mmtChildCountAdd, mmtChildCountSubtract, childGuests);
-        Log.info("Added Child Guests");
+        Logs.INFO("Added Child Guests - " + childGuests);
     }
 
     public void addRoom() {
-        waitForElement(mmtAddRoom,DEFAULT_TIME);
+        waitForElement(mmtAddRoom, DEFAULT_TIME);
         click(mmtAddRoom);
-        Log.info("Added Extra Rooms");
+        Logs.INFO("Add Another Room button clicked");
+    }
+
+    public String[] getCheckInCheckOutDate() {
+        String checkInDate = getText(mmtCheckInDate) + " " + getText(mmtCheckInMonth) + " " + getText(mmtCheckInWeek);
+        Logs.INFO("Check In Date on Guest Layout - " + checkInDate);
+        String checkOutDate = getText(mmtCheckOutDate) + " " + getText(mmtCheckOutMonth) + " " + getText(mmtCheckOutWeek);
+        Logs.INFO("Check Out Date on Guest Layout - " + checkOutDate);
+        String date[] = { checkInDate, checkOutDate };
+        return date;
     }
 
     public void clickDoneButton(){
-        waitForElement(mmtDoneButton,DEFAULT_TIME);
+        waitForElement(mmtDoneButton, DEFAULT_TIME);
         click(mmtDoneButton);
-        Log.info("Done button is clicked");
+        Logs.INFO("Done button clicked");
+    }
+
+    public void selectTripType(String tripType) {
+        waitForElement(mmtSearchButton, DEFAULT_TIME);
+        switch (tripType) {
+            case "Business": click(businessTripTypeCheckBx);    break;
+            case "Family": click(familyTripTypeCheckBx);    break;
+            case "Romantic": click(romanticTripType);   break;
+            default: Logs.ERROR("Invalid Trip Type");
+        }
+        Logs.INFO(tripType + " Trip Type selected");
     }
 
     public void clickSearchButton() {
         waitForElement(mmtSearchButton, 5);
         click(mmtSearchButton);
-        Log.info("Search button is clicked");
+        Logs.INFO("Search button clicked");
     }
 
     public String getGuestCount() {
-        waitForElement(mmtGuestLayout,DEFAULT_TIME);
-        return getText(mmtGuestLayout);
+        waitForElement(hotelsGuestCount, DEFAULT_TIME);
+        String guestCount = getText(hotelsGuestCount);
+        Logs.INFO("Guest Count on Guest Layout - " + guestCount);
+        return guestCount;
     }
 
     public String getRoomCount() {
-        waitForElement(hotelsRoomCount,DEFAULT_TIME);
-        return getText(hotelsRoomCount);
+        waitForElement(hotelsRoomCount, DEFAULT_TIME);
+        String roomCount = getText(hotelsRoomCount);
+        Logs.INFO("Room Count on Guest Layout - " + roomCount);
+        return roomCount;
     }
 
-
-    // Will Add or Subtract guests count according to required number.
+    /* Will Add or Subtract guests count according to required number */
     private void setPassengerCount(MobileElement locatorCount, MobileElement locatorAdd, MobileElement locatorSubtract, int totalPassenger) {
         int adultCount = Integer.parseInt(getText(locatorCount));
         if (adultCount > totalPassenger) {
@@ -280,25 +289,10 @@ public class MMT_Mobile extends TestBase {
         }
     }
 
-    public void MMT_Payment() {
-        waitForElement(mmtDonationCheckBox, 5);
-        if (isChecked(mmtDonationCheckBox))
-            click(mmtDonationCheckBox);
-        click(mmtHotelsContinueButton);
-        if (isDisplayed(mmtHotelsBnplPaymentOption))
-            click(mmtHotelsFullPaymentOption);
-        click(mmtHotelsProceedPayment);
-        click(mmtHotelsThankYouPageDetailsExpand);
-    }
-
-    public void MMT_ThankYouPage_Assertions(String hotelName, String location) {
-        Assertion asserts = new Assertion();
-        asserts.assertEquals(hotelName, mmtHotelsThankYouPageHotelName.getText());
-        asserts.assertEquals(location, mmtHotelsThankYouPageLocation.getText());
-    }
-
     public void checkIfOnHomeScreen() {
         waitForElement(homePageBottomBar, DEFAULT_TIME);
         Logs.INFO("User in Home Page");
     }
+
+
 }
