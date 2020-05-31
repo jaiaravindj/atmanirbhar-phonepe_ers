@@ -2,21 +2,19 @@ package com.pom.pages;
 
 import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidBy;
 import io.appium.java_client.pagefactory.AndroidFindAll;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import java.util.List;
 
 
-public class MMT_Mobile_Sumed extends TestBase {
+public class MMT_Mobile_BookingFlow extends TestBase {
 
-    public MMT_Mobile_Sumed() {
+
+    public MMT_Mobile_BookingFlow() {
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
         Logs.INFO("This is constructor - MMT");
@@ -45,12 +43,6 @@ public class MMT_Mobile_Sumed extends TestBase {
     @AndroidFindBy (id = "com.makemytrip:id/iv_lotte_anim")
     MobileElement gotItBtn;
 
-    @AndroidFindBy (id = "com.makemytrip:id/item_price_l_h")
-    MobileElement priceFilterBtn;
-
-    @AndroidFindBy (id = "com.makemytrip:id/closeButton")
-    MobileElement closeBtn;
-
     @AndroidFindBy (id = "com.makemytrip:id/sort_filter")
     MobileElement sortFilterBtn;
 
@@ -68,9 +60,6 @@ public class MMT_Mobile_Sumed extends TestBase {
 
     @AndroidFindBy (id = "com.makemytrip:id/showing_results")
     MobileElement noOfResultsTxt;
-
-    @AndroidFindBy (id = "com.makemytrip:id/tvCustmerRating")
-    MobileElement ratingOfHotelTxt;
 
     @AndroidFindAll ( {
             @AndroidBy (id = "com.makemytrip:id/tv_hotel_name"),
@@ -156,15 +145,56 @@ public class MMT_Mobile_Sumed extends TestBase {
     @AndroidFindBy (id = "com.makemytrip:id/request_name")
     List<MobileElement> requestNameBtnList;
 
-    @AndroidFindBy (id = "com.makemytrip:id/request_checkbox")
-    List<MobileElement> requestCheckBxList;
-
     @AndroidFindBy (id = "com.makemytrip:id/done_btn")
     MobileElement doneOnSpecialRequestBtn;
 
     @AndroidFindBy (id = "com.makemytrip:id/reqCount")
     MobileElement specialRequestCountTxt;
 
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().resourceId(\"com.makemytrip:id/cbAddOn\"));")
+    MobileElement mmtDonationCheckBox;
+
+    @AndroidFindBy(id = "com.makemytrip:id/rl_bnpl_option")
+    MobileElement mmtHotelsBnplPaymentOption;
+
+    @AndroidFindBy(id = "com.makemytrip:id/rb_pay_in_full")
+    MobileElement mmtHotelsFullPaymentOption;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tv_proceed_payment")
+    MobileElement mmtHotelsProceedPayment;
+
+    @AndroidFindBy(id = "com.makemytrip:id/ivDetailExpandOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageDetailsExpand;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvHotelNameOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageHotelName;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvHotelAddressOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageLocation;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvReviewCheckInOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageCheckIn;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageCheckOut;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckInDateOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageCheckInDate;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutDateOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageCheckOutDate;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckInTimeOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageCheckInTime;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutTimeOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageCheckOutTime;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvTotalRoomsBookedOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageRoomcount;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvNumOfGuestOnThankYouPage")
+    MobileElement mmtHotelsThankYouPageGuestcount;
 
 
 
@@ -189,6 +219,10 @@ public class MMT_Mobile_Sumed extends TestBase {
         return title;
     }
 
+    /* Handle Price Range Filter Bar:
+    *  Logic -> Find the dimensions of the element of the bar
+    *        -> Find relative positions of click by which the amount is changing
+    *        -> Run a loop till your minimun price requirement is met  */
     public void setPriceRangeFilter(String minAmount) {
 
         String currentPriceRange = getText(priceRangeTxt);
@@ -246,6 +280,9 @@ public class MMT_Mobile_Sumed extends TestBase {
         return noOfResultsFiltered;
     }
 
+    /* The Hotel Name list returns only the visible names on the current screen,
+     * Logic -> Scrolling and creating a new list on every scroll
+     *       -> Incrementing the count of the hotel name after every scroll on a condition that the hotel name is not the old one */
     public String selectNthHotelInList(int n) throws Exception {
 
         boolean flag = false;
@@ -265,6 +302,7 @@ public class MMT_Mobile_Sumed extends TestBase {
                     Logs.INFO(n + "th Hotel in the list is - " + hotelName1);
                     click(element);
                     Logs.INFO(hotelName1 + " is clicked & selected");
+                    flag = true;
                     return hotelName1;
                 }
                 scrolling();
@@ -428,28 +466,52 @@ public class MMT_Mobile_Sumed extends TestBase {
         return reqCount;
     }
 
+    public void MMT_Payment() {
 
+        waitForElement(mmtDonationCheckBox, DEFAULT_TIME);
+        if (isChecked(mmtDonationCheckBox))
+            click(mmtDonationCheckBox);
+        Logs.INFO("Donation checkbox de-selected");
+        clickOnSelectContinueBtn();
+        if (isDisplayed(mmtHotelsBnplPaymentOption))
+            click(mmtHotelsFullPaymentOption);
+        click(mmtHotelsProceedPayment);
+        click(mmtHotelsThankYouPageDetailsExpand);
+    }
 
+    public String getHotelNameOnThankYouPage() {
+        waitForElement(mmtHotelsThankYouPageHotelName, DEFAULT_TIME);
+        String hotelName = getText(mmtHotelsThankYouPageHotelName);
+        Logs.INFO("Hotel Name on ThankYou Page - " + hotelName);
+        return hotelName;
+    }
 
+    public String getHotelAddressOnThankYouPage() {
+        String cityName = getText(mmtHotelsThankYouPageLocation);
+        Logs.INFO("Hotel Address on ThankYou Page - " + cityName);
+        return cityName;
+    }
 
+    public String getRoomCountOnThanksYouPage() {
+        String roomCount = getText(mmtHotelsThankYouPageRoomcount);
+        Logs.INFO("Room Count on ThankYou Page - " + roomCount);
+        return roomCount;
+    }
 
+    public String getGuestCountOnThankYouPage() {
+        String guestCount = getText(mmtHotelsThankYouPageGuestcount);
+        Logs.INFO("Guest Count on ThankYou Page - " + guestCount);
+        return guestCount;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public String[] getCheckInCheckOutDateOnThankYouPage() {
+        String date[] = new String[2];
+        date[0] = getText(mmtHotelsThankYouPageCheckInDate);
+        date[1] = getText(mmtHotelsThankYouPageCheckOutDate);
+        Logs.INFO("CheckIn Date on ThankYou page - " + date[0]);
+        Logs.INFO("CheckOut Date on ThankYou page - " + date[1]);
+        return date;
+    }
 
 
 

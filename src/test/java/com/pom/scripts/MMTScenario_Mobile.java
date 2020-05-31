@@ -1,8 +1,8 @@
 package com.pom.scripts;
 
 
-import com.pom.pages.MMT_Mobile;
-import com.pom.pages.MMT_Mobile_Sumed;
+import com.pom.pages.MMT_Mobile_LoginAndSearch;
+import com.pom.pages.MMT_Mobile_BookingFlow;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -14,16 +14,13 @@ import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
 
 
-
-
-
 @Listeners(com.pom.utilities.TestListener.class)
 public class MMTScenario_Mobile extends TestBase {
 	
 	
 	SoftAssert softAssert;
-	MMT_Mobile mmt;
-	MMT_Mobile_Sumed mmt2;
+	MMT_Mobile_LoginAndSearch mmt1;
+	MMT_Mobile_BookingFlow mmt2;
 	
 	@Parameters({"osType"})
 	@BeforeMethod
@@ -31,44 +28,50 @@ public class MMTScenario_Mobile extends TestBase {
 		
 		invokeDriver(osType);
 		softAssert = new SoftAssert();
-		mmt = new MMT_Mobile();
-		mmt2 = new MMT_Mobile_Sumed();
+		mmt1 = new MMT_Mobile_LoginAndSearch();
+		mmt2 = new MMT_Mobile_BookingFlow();
 	}
 	
 
 	@Test
 	public void mmtScriptAppium() throws Exception {
 
-		// start script
 		Logs.INFO("LOGIN TO THE APP");
-		mmt.dismissGLoginPopup();
+		mmt1.dismissGLoginPopup();
+/*		mmt.clickMenuDrawer();
+		mmt.clickLoginSignUpBtn();
 
-//		mmt.enterLoginEmail("atmanirbhar.phonep.ers@gmail.com");
-//		mmt.clickContinueButton();
-//		mmt.enterPassword("Sumed@Jai123");
-//		mmt.clickContinueButton();
-		mmt.checkIfOnHomeScreen();
+		mmt.enterLoginEmail(readProp("username"));
+		mmt.clickContinueButton();
+		mmt.enterPassword(readProp("password"));
+		mmt.clickContinueButton();*/
+		mmt1.checkIfOnHomeScreen();
 
-		mmt.goToHotelsSectino();
-		mmt.selectCity(readProp("cityName"));
-		softAssert.assertTrue(mmt.getSelectedCityName().contains(readProp("cityNameFull")),
+		Logs.INFO("SEARCH HOTEL FOR GIVEN PARAMETERS");
+		mmt1.goToHotelsSection();
+		mmt1.selectCity(readProp("cityName"));
+		softAssert.assertTrue(mmt1.getSelectedCityName().contains(readProp("cityNameFull")),
 				"User selected city "+readProp("cityNameFull"));
 
-		mmt.goToGuestPage();
-		mmt.removeExistingGuest();
+		mmt1.goToGuestPage();
+		mmt1.removeExistingGuest();
 
-		mmt.setAduldGuest(2);
-		mmt.setChildGuest(2);
-		mmt.addRoom();
-		mmt.setAduldGuest(2);
-		mmt.setChildGuest(2);
+		Logs.INFO("SELECT 2 ROOMS WITH 2 ADULTS & 2 CHILDREN EACH");
+		mmt1.setAdultGuest(2);
+		mmt1.setChildGuest(2);
+		mmt1.addRoom();
+		mmt1.setAdultGuest(2);
+		mmt1.setChildGuest(2);
 
-		mmt.clickDoneButton();
-		softAssert.assertTrue(mmt.getGuestCount().contains(readProp("totalGuests")), "Number Of Guests - "+readProp("totalGuests"));
-		softAssert.assertTrue(mmt.getRoomCount().contains(readProp("noOfRooms")), "Number Of Rooms - "+readProp("noOfRooms"));
+		mmt1.clickDoneButton();
+		softAssert.assertTrue(mmt1.getGuestCount().contains(readProp("totalGuests")),
+				"Number Of Guests on Guest Layout - "+readProp("totalGuests"));
+		softAssert.assertTrue(mmt1.getRoomCount().contains(readProp("noOfRooms")),
+				"Number Of Rooms on Guest Layout - "+readProp("noOfRooms"));
+		String checkInOutDate[] = mmt1.getCheckInCheckOutDate();
 
-		mmt.selectTripType(readProp("tripType"));
-		mmt.clickSearchButton();
+		mmt1.selectTripType(readProp("tripType"));
+		mmt1.clickSearchButton();
 
 		mmt2.clickOnGotItBtn();
 
@@ -95,8 +98,10 @@ public class MMTScenario_Mobile extends TestBase {
 		softAssert.assertTrue(mmt2.getUserRatingOnPDP() >= Double.parseDouble(readProp("userRating")),
 				"User Rating of selected Hotel is below "+readProp("userRating"));
 		softAssert.assertTrue(mmt2.getRoomCountOnPDP().contains(readProp("noOfRooms")), "No. of Rooms mismatch on hotel details page");
-		softAssert.assertTrue(mmt2.getGuestCountOnPDP().contains(readProp("totalGuests")), "No. of Guests omismatch on hotel details page");
-		// ASSERT DATE
+		softAssert.assertTrue(mmt2.getGuestCountOnPDP().contains(readProp("totalGuests")), "No. of Guests mismatch on hotel details page");
+		String dateonPDP[] = mmt2.getCheckInCheckOutDateOnPDP();
+		softAssert.assertTrue(checkInOutDate[0].contains(dateonPDP[0]) && checkInOutDate[1].contains(dateonPDP[1]),
+				"Check In - Check Out Date mismatch on hotel details page");
 
 		mmt2.clickOnSelectContinueBtn();
 		softAssert.assertTrue(mmt2.isSelectRoomTitlePresent(), "Select Room page title not visible");
@@ -117,7 +122,9 @@ public class MMTScenario_Mobile extends TestBase {
 				"No. of Rooms mismatch on Review Booking page");
 		softAssert.assertTrue(mmt2.getGuestCountOnReviewRoom().contains(readProp("totalGuests")),
 				"No. of Guests omismatch on Review Booking page");
-		// assert date
+		String dateOnReviewRoom[] = mmt2.getCheckInCheckOutDateOnReviewRoom();
+		softAssert.assertTrue(dateOnReviewRoom[0].contains(dateonPDP[0]) && dateOnReviewRoom[1].contains(dateonPDP[1]),
+				"Check In - Check Out Date mismatch on Review Booking page");
 
 		Logs.INFO("ENTER PRIMARY GUEST DETAILS");
 		mmt2.selectNameTitle(readProp("title"));
@@ -127,12 +134,21 @@ public class MMTScenario_Mobile extends TestBase {
 
 		Logs.INFO("SELECT 2 SPECIAL REQUESTS");
 		String[] specialRequests = { readProp("smokingRoom"), readProp("largeBed") };
-		int noOfRequests = mmt2.selectSpecialRequests(specialRequests);	// count returned incorrectly
+		int noOfRequests = mmt2.selectSpecialRequests(specialRequests);
 		softAssert.assertEquals(noOfRequests, specialRequests.length, "No. of Special Requests selected mismatch");
 		softAssert.assertTrue(mmt2.getSpecialRequestCount().contains(String.valueOf(specialRequests.length)),
 				"No. of Special Requests selected mismatch on Review Booking page");
 
-		mmt.MMT_Payment();
+		Logs.INFO("ON SELECT PAYMENT MODE PAGE");
+		mmt2.MMT_Payment();
+		softAssert.assertTrue(mmt2.getHotelNameOnThankYouPage().contains(selectedHotelName), "Hotel Name mismatch on ThankYou Page");
+		softAssert.assertTrue(mmt2.getHotelAddressOnThankYouPage().contains(readProp("cityName")), "City Name mismatch on ThankYou Page");
+		softAssert.assertTrue(mmt2.getGuestCountOnThankYouPage().contains(String.valueOf(Integer.parseInt(guestCount[0]) + Integer.parseInt(guestCount[1]))),
+				"Guest Count mismatch on ThankYou Page");
+		softAssert.assertTrue(mmt2.getRoomCountOnThanksYouPage().contains(readProp("noOfRooms")), "Room Count mismatch on ThankYou Page");
+		String dateOnThankYou[] = mmt2.getCheckInCheckOutDateOnThankYouPage();
+		softAssert.assertTrue(dateOnReviewRoom[0].contains(dateOnThankYou[0]) && dateOnReviewRoom[1].contains(dateOnThankYou[1]),
+				"Check In - Check Out Date mismatch on ThankYou page");
 
 		softAssert.assertAll();
 		endOfScript();
