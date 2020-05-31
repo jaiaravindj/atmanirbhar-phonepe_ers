@@ -5,7 +5,6 @@ import org.openqa.selenium.support.PageFactory;
 import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
 import io.appium.java_client.MobileElement;
-import org.testng.asserts.Assertion;
 import java.util.List;
 
 
@@ -41,10 +40,7 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     @AndroidFindBy(id = "com.makemytrip:id/pwd_option")
     MobileElement mmtLoginViaPasswordButton;
 
-    @AndroidFindBy(id = "com.makemytrip:id/universal_search")
-    MobileElement mmtUniversalSearchLayout;
-
-    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id='com.makemytrip:id/title' and @text='Hotels']")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.makemytrip:id/title\").text(\"Hotels\")")
     MobileElement mmtHotelsText;
 
     @AndroidFindBy(id = "com.makemytrip:id/city")
@@ -228,11 +224,11 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     }
 
     public String[] getCheckInCheckOutDate() {
-        String checkInDate = getText(mmtCheckInDate) + " " + getText(mmtCheckInMonth) + " " + getText(mmtCheckInWeek);
-        Logs.INFO("Check In Date on Guest Layout - " + checkInDate);
-        String checkOutDate = getText(mmtCheckOutDate) + " " + getText(mmtCheckOutMonth) + " " + getText(mmtCheckOutWeek);
-        Logs.INFO("Check Out Date on Guest Layout - " + checkOutDate);
-        String date[] = { checkInDate, checkOutDate };
+        String[] date = new String[2];
+        date[0] = getText(mmtCheckInDate) + " " + getText(mmtCheckInMonth) + " " + getText(mmtCheckInWeek);
+        Logs.INFO("Check In Date on Guest Layout - " + date[0]);
+        date[1] = getText(mmtCheckOutDate) + " " + getText(mmtCheckOutMonth) + " " + getText(mmtCheckOutWeek);
+        Logs.INFO("Check Out Date on Guest Layout - " + date[1]);
         return date;
     }
 

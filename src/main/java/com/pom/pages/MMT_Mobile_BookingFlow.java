@@ -58,9 +58,6 @@ public class MMT_Mobile_BookingFlow extends TestBase {
     @AndroidFindBy (id = "com.makemytrip:id/tv_filter_count")
     MobileElement noOfResultsOnSortFilterTxt;
 
-    @AndroidFindBy (id = "com.makemytrip:id/showing_results")
-    MobileElement noOfResultsTxt;
-
     @AndroidFindAll ( {
             @AndroidBy (id = "com.makemytrip:id/tv_hotel_name"),
             @AndroidBy (id = "com.makemytrip:id/tvHotelName")
@@ -172,23 +169,11 @@ public class MMT_Mobile_BookingFlow extends TestBase {
     @AndroidFindBy(id = "com.makemytrip:id/tvHotelAddressOnThankYouPage")
     MobileElement mmtHotelsThankYouPageLocation;
 
-    @AndroidFindBy(id = "com.makemytrip:id/tvReviewCheckInOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckIn;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckOut;
-
     @AndroidFindBy(id = "com.makemytrip:id/tvCheckInDateOnThankYouPage")
     MobileElement mmtHotelsThankYouPageCheckInDate;
 
     @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutDateOnThankYouPage")
     MobileElement mmtHotelsThankYouPageCheckOutDate;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckInTimeOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckInTime;
-
-    @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutTimeOnThankYouPage")
-    MobileElement mmtHotelsThankYouPageCheckOutTime;
 
     @AndroidFindBy(id = "com.makemytrip:id/tvTotalRoomsBookedOnThankYouPage")
     MobileElement mmtHotelsThankYouPageRoomcount;
@@ -222,7 +207,7 @@ public class MMT_Mobile_BookingFlow extends TestBase {
     /* Handle Price Range Filter Bar:
     *  Logic -> Find the dimensions of the element of the bar
     *        -> Find relative positions of click by which the amount is changing
-    *        -> Run a loop till your minimun price requirement is met  */
+    *        -> Run a loop till your minimum price requirement is met  */
     public void setPriceRangeFilter(String minAmount) {
 
         String currentPriceRange = getText(priceRangeTxt);
@@ -250,7 +235,7 @@ public class MMT_Mobile_BookingFlow extends TestBase {
     }
 
     public void setUserRatingFilter(String userRating) {
-        Logs.INFO("Desired User Rating - " + userRating);
+            Logs.INFO("Desired User Rating - " + userRating);
         waitForElement(userRatingTxt.get(0), DEFAULT_TIME);
         selectInList(userRatingTxt, userRating);
     }
@@ -272,12 +257,6 @@ public class MMT_Mobile_BookingFlow extends TestBase {
         waitForElement(hotelNameTxt, DEFAULT_TIME);
         waitForElement(assertFilterNameTxt.get(0), DEFAULT_TIME);
         return containsInList(assertFilterNameTxt, filterName);
-    }
-
-    public String noOfResultsFiltered() {
-        String noOfResultsFiltered = getText(noOfResultsTxt);
-        Logs.INFO("No. of results filtered - " + noOfResultsFiltered);
-        return noOfResultsFiltered;
     }
 
     /* The Hotel Name list returns only the visible names on the current screen,
@@ -302,7 +281,6 @@ public class MMT_Mobile_BookingFlow extends TestBase {
                     Logs.INFO(n + "th Hotel in the list is - " + hotelName1);
                     click(element);
                     Logs.INFO(hotelName1 + " is clicked & selected");
-                    flag = true;
                     return hotelName1;
                 }
                 scrolling();
@@ -337,7 +315,7 @@ public class MMT_Mobile_BookingFlow extends TestBase {
     }
 
     public String[] getCheckInCheckOutDateOnPDP() {
-        String date[] = new String[2];
+        String[] date = new String[2];
         date[0] = getText(checkInDateOnPDPTxt);
         date[1] = getText(checkOutDateOnPDPTxt);
         Logs.INFO("CheckIn Date on selected Hotel page - " + date[0]);
@@ -370,7 +348,7 @@ public class MMT_Mobile_BookingFlow extends TestBase {
     }
 
     public String[] getGuestCountOnRoomDetails() {
-        String guestCount[] = new String[2];
+        String[] guestCount = new String[2];
         guestCount[0] = getText(guestCountOnRoomInfoTxt.get(0));
         guestCount[1] = getText(guestCountOnRoomInfoTxt.get(1));
         Logs.INFO("Guest Count on Room Details page - \t Adult:" + guestCount[0] + "  Children:" + guestCount[1]);
@@ -410,7 +388,7 @@ public class MMT_Mobile_BookingFlow extends TestBase {
     }
 
     public String[] getCheckInCheckOutDateOnReviewRoom() {
-        String date[] = new String[2];
+        String[] date = new String[2];
         date[0] = getText(checkInDateOnReviewRoomTxt);
         date[1] = getText(checkOutDateOnReviewRoomTxt);
         Logs.INFO("CheckIn Date on selected Hotel page - " + date[0]);
@@ -505,7 +483,7 @@ public class MMT_Mobile_BookingFlow extends TestBase {
     }
 
     public String[] getCheckInCheckOutDateOnThankYouPage() {
-        String date[] = new String[2];
+        String[] date = new String[2];
         date[0] = getText(mmtHotelsThankYouPageCheckInDate);
         date[1] = getText(mmtHotelsThankYouPageCheckOutDate);
         Logs.INFO("CheckIn Date on ThankYou page - " + date[0]);
