@@ -10,13 +10,11 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Calendar;
 import java.util.List;
+
+import io.appium.java_client.FindsByAndroidUIAutomator;
+import io.appium.java_client.android.AndroidDriver;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -160,6 +158,24 @@ public class TestBase extends ReadProperties implements IBaseInterface {
 			
 		} catch (Exception unknownExc) {
 			
+			Logs.ERROR(unknownExc.getMessage());
+			Assert.fail();
+			return false;
+		}
+	}
+
+	public boolean isChecked(MobileElement element) {
+
+		try {
+
+			return Boolean.parseBoolean(element.getAttribute("checked"));
+
+		} catch (NoSuchElementException e) {
+
+			return false;
+
+		} catch (Exception unknownExc) {
+
 			Logs.ERROR(unknownExc.getMessage());
 			Assert.fail();
 			return false;

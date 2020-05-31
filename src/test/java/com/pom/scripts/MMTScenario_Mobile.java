@@ -1,6 +1,7 @@
 package com.pom.scripts;
 
 
+import com.pom.pages.MMT_Mobile;
 import com.pom.pages.MMT_Mobile_Sumed;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -21,7 +22,7 @@ public class MMTScenario_Mobile extends TestBase {
 	
 	
 	SoftAssert softAssert;
-	//MMT_Mobile mmt;
+	MMT_Mobile mmt;
 	MMT_Mobile_Sumed mmt2;
 	
 	@Parameters({"osType"})
@@ -30,7 +31,7 @@ public class MMTScenario_Mobile extends TestBase {
 		
 		invokeDriver(osType);
 		softAssert = new SoftAssert();
-		//mmt = new MMT_Mobile();
+		mmt = new MMT_Mobile();
 		mmt2 = new MMT_Mobile_Sumed();
 	}
 	
@@ -39,9 +40,34 @@ public class MMTScenario_Mobile extends TestBase {
 	public void mmtScriptAppium() throws Exception {
 
 		// start script
-		// mmt.MMT_Login();
-		// mmt.MMT_Hotels();
+		Logs.INFO("Login into the App");
+		mmt.dismissGLoginPopup();
 
+//		mmt.enterLoginEmail("atmanirbhar.phonep.ers@gmail.com");
+//		mmt.clickContinueButton();
+//		mmt.enterPassword("Sumed@Jai123");
+//		mmt.clickContinueButton();
+		mmt.checkIfOnHomeScreen();
+
+		mmt.goToHotelsSectino();
+		mmt.selectCity("Delhi");
+		softAssert.assertTrue(mmt.getSelectedCityName().contains(readProp("cityNameFull")), "User selected city Delhi, India");
+
+		mmt.goToGuestPage();
+		mmt.removeExistingGuest();
+
+		mmt.setAduldGuest(2);
+		mmt.setChildGuest(2);
+
+		mmt.addRoom();
+
+		mmt.setAduldGuest(2);
+		mmt.setChildGuest(2);
+
+		mmt.clickDoneButton();
+		softAssert.assertTrue(mmt.getGuestCount().contains(readProp("totalGuests")), "Number Of Guests - 08");
+		softAssert.assertTrue(mmt.getRoomCount().contains(readProp("totalGuests")), "Number Of Guests - 08");
+		mmt.clickSearchButton();
 
 		mmt2.clickOnGotItBtn();
 
@@ -105,7 +131,7 @@ public class MMTScenario_Mobile extends TestBase {
 		softAssert.assertTrue(mmt2.getSpecialRequestCount().contains(String.valueOf(specialRequests.length)),
 				"No. of Special Requests selected mismatch on Review Booking page");
 
-
+		mmt.MMT_Payment();
 
 		softAssert.assertAll();
 		endOfScript();
@@ -118,8 +144,8 @@ public class MMTScenario_Mobile extends TestBase {
 		Logs.INFO("***** Quitting Driver *****");
 		driver.quit();
 	}
-	
-	
-	
+
+
+
 
 }
