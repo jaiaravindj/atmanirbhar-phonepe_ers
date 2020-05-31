@@ -2,74 +2,102 @@ package com.pom.utilities;
 
 import com.oracle.tools.packager.Log;
 import com.pom.framework.IBaseInterface;
+import com.pom.framework.ReadProperties;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.http.ContentType.*;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.http.HttpStatus;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static javax.swing.text.DefaultStyledDocument.ElementSpec.ContentType;
 
 public class HeadSpinHelper {
 
     private RequestSpecification requestSpec;
     private ResponseSpecification responseSpec;
     private Response response;
+    ReadProperties readProperties;
 
-    public Map getHotSpinDevices() {
+    public HeadSpinHelper() {
+        readProperties = new ReadProperties();
+    }
+
+    public Map getHeadSpinDevices(String authToken) throws IOException {
+
+        String baseUri = "https://"+authToken+"@api-dev.headspin.io/v0/devices/automation-config";
         Map<String,String> capabilities = new HashMap<>();
 
         requestSpec = new RequestSpecBuilder()
-                .setAccept(ContentType.JSON)
-                .setContentType(ContentType.JSON)
+                .setAccept(io.restassured.http.ContentType.JSON)
+                .setContentType(io.restassured.http.ContentType.JSON)
                 .build();
 
         responseSpec = new ResponseSpecBuilder()
                 .expectStatusCode(HttpStatus.SC_OK)
-                .expectContentType(ContentType.JSON)
+                .expectContentType(io.restassured.http.ContentType.JSON)
                 .build();
 
         response = given().spec(requestSpec)
-                .get("https://77ae52fb70d443a195f1d0a8e7b370cc@api-dev.headspin.io/v0/devices/automation-config")
+                .get(baseUri)
                 .then()
                 .spec(responseSpec)
                 .extract()
                 .response();
 
         Map<String, Map> responseMap = response.getBody().jsonPath().get();
-        Map<String,String> caps = new HashMap();
-        String firstDevice = responseMap.entrySet().iterator().next().getKey();
-        String driver_url = "https://in-bng.headspin.io:7012/v0/77ae52fb70d443a195f1d0a8e7b370cc/wd/hub";
-        driver_url = driver_url.replace("{api_token}","77ae52fb70d443a195f1d0a8e7b370cc");
+        Map<String,String> caps;
+        String keyName = checkIfCountryReadable(responseMap);
 
-        caps = (Map<String, String>) responseMap.get(firstDevice).get("capabilities");
-        capabilities.put("device-id", "S84H5LKNH6AQ6PEA");
+        String driver_url = responseMap.get(keyName).get("driver_url").toString();
+        driver_url = driver_url.replace("{api_token}",authToken);
+
+        caps = (Map<String, String>) responseMap.get(keyName).get("capabilities");
+        capabilities.put("deviceId", caps.get("deviceName"));
         capabilities.put("driverUrl", driver_url);
-
+//        String apkPath = IBaseInterface.PROJECT_PATH + File.separator + "Resources" + File.separator + "mmt.apk";
+//        installUninstallApk(apkPath,caps.get("deviceName"),false);
         return capabilities;
     }
 
-    private Response installApk(String apkPath,String deviceId, boolean isUninstall) {
-        String baseUri = "https://77ae52fb70d443a195f1d0a8e7b370cc@api-dev.headspin.io/v0/adb/S84H5LKNH6AQ6PEA/uninstall?package=com.makemytrip";
+    private String checkIfCountryReadable(Map<String, Map> responseMap) throws IOException {
+        String keyName = null, countryName = "";
+        Iterator it = responseMap.entrySet().iterator();
+        for(String key : responseMap.keySet()) {
+            Map device_location = (Map) responseMap.get(key).get("device_location");
+            countryName = device_location.get("country_readable").toString();
+            if(countryName.equalsIgnoreCase(readProperties.getProperties("deviceLocation"))) {
+                keyName = key;
+                break;
+            }
+        }
+        return keyName;
+    }
+
+    private Response installUninstallApk(String apkPath,String deviceId, boolean isUninstall) throws IOException {
+        String baseUri = "https://api-dev.headspin.io/v0/adb/"+deviceId+"/uninstall?package="+readProperties.getProperties("appPackage");
         File apkFilePath = new File(apkPath);
         requestSpec = new RequestSpecBuilder()
-                .setAccept(ContentType.JSON)
+                .setAccept(io.restassured.http.ContentType.JSON)
                 .build();
 
         if(!isUninstall) {
-            baseUri = "https://77ae52fb70d443a195f1d0a8e7b370cc@api-dev.headspin.io/v0/adb/S84H5LKNH6AQ6PEA/install";
+            baseUri = "https://api-dev.headspin.io/v0/adb/"+deviceId+"/install";
             requestSpec.multiPart(apkFilePath);
         }
 
         responseSpec = new ResponseSpecBuilder()
                 .expectStatusCode(HttpStatus.SC_OK)
-                .expectContentType(ContentType.JSON)
+                .expectContentType(io.restassured.http.ContentType.JSON)
                 .build();
 
         response = given().spec(requestSpec)

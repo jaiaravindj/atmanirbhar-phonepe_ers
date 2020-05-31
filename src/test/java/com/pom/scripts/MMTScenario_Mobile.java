@@ -46,7 +46,7 @@ public class MMTScenario_Mobile extends TestBase {
 		Logs.INFO("Login into the App");
 		mmt.dismissGLoginPopup();
 
-//		mmt.enterLoginEmail("atmanirbhar.phonep.ers@gmail.com");
+//		mmt.enterLoginEmail(readProp("email"));
 //		mmt.clickContinueButton();
 //		mmt.enterPassword("Sumed@Jai123");
 //		mmt.clickContinueButton();
@@ -146,11 +146,6 @@ public class MMTScenario_Mobile extends TestBase {
 
 		Logs.INFO("***** Quitting Driver *****");
 		driver.quit();
-	}
-
-	@Test
-	public void testingMethod() throws IOException {
-		Log.info("Working fine");
 	}
 
 }

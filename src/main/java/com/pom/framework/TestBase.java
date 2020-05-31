@@ -45,7 +45,7 @@ public class TestBase extends ReadProperties implements IBaseInterface {
 	}
 
 	
-	public AppiumDriver<MobileElement> invokeDriver(String osType) {
+	public AppiumDriver<MobileElement> invokeDriver(String osType) throws IOException {
 
 		if (driver == null || driver.getSessionId() == null) {
 

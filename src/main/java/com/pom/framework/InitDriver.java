@@ -2,6 +2,7 @@ package com.pom.framework;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
@@ -66,29 +67,32 @@ public class InitDriver {
 	}
 	
 	
-	AppiumDriver<MobileElement> initAndroid() {
+	AppiumDriver<MobileElement> initAndroid() throws IOException {
+		readProperties = new ReadProperties();
 		HeadSpinHelper headSpinHelper = new HeadSpinHelper();
-		Map headSpinCaps = headSpinHelper.getHotSpinDevices();
-		
+		Map headSpinCaps = headSpinHelper.getHeadSpinDevices(readProperties.getProperties("headSpinAuthToken"));
+
 		try {
 			
 			Logs.INFO("Creating Android Driver !!!");
-			
-			readProperties = new ReadProperties();
+
 			capabilities = new DesiredCapabilities();
 			
 			capabilities.setCapability("appPackage", readProperties.getProperties("appPackage"));
 			capabilities.setCapability("appActivity", readProperties.getProperties("appActivity"));
 			capabilities.setCapability("platformName", "Android");
 			capabilities.setCapability("platformVersion", readProperties.getProperties("PlatformVersion"));
-			capabilities.setCapability("deviceName", headSpinCaps.get("device-id"));
-			capabilities.setCapability("udid", headSpinCaps.get("device-id"));
+			capabilities.setCapability("deviceName", headSpinCaps.get("deviceId"));
+			capabilities.setCapability("udid", headSpinCaps.get("deviceId"));
+// 			capabilities.setCapability("deviceName", readProperties.getProperties("deviceName"));
+//			capabilities.setCapability("udid", readProperties.getProperties("deviceName"));
 //			capabilities.setCapability("app", IBaseInterface.PROJECT_PATH + File.separator + "Resources" + File.separator + "mmt.apk");
 			capabilities.setCapability("autoGrantPermissions", true);
 			capabilities.setCapability("unicodekeyboard", true);
 			capabilities.setCapability("resetkeyboard", true);
 			capabilities.setCapability("noReset", true);
 			capabilities.setCapability("newCommandTimeout", 600);
+			capabilities.setCapability("headspin:capture.video", true);
 
 //			serverUrl = readProperties.getProperties("serverUrl");
 			serverUrl = headSpinCaps.get("driverUrl").toString();
