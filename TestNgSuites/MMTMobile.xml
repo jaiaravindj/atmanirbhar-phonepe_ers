@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="FlipkartMobile">
+<suite name="MMTMobile">
 
 
 	<listeners>
@@ -9,7 +9,7 @@
 	</listeners>
 	
 	
-	<test verbose="1" name="FlipkartMobile">
+	<test verbose="1" name="MMTMobile">
 	
 		<parameter name="osType" value="Android" />
 		

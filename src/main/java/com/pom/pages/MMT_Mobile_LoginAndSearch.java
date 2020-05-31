@@ -25,6 +25,12 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     @AndroidFindBy(id = "com.makemytrip:id/skip")
     MobileElement loginPageSkip;
 
+    @AndroidFindBy(id = "com.makemytrip:id/resend_otp")
+    MobileElement resendOTPBtn;
+
+    @AndroidFindBy(id = "com.makemytrip:id/tvSkip")
+    MobileElement skipBtn;
+
     @AndroidFindBy(className = "android.widget.EditText")
     MobileElement mmtEditText;
 
@@ -125,6 +131,7 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     MobileElement homePageBottomBar;
 
 
+
     public void dismissGLoginPopup() {
         waitForElement(gLoginDismiss, DEFAULT_TIME);
         click(gLoginDismiss);
@@ -138,7 +145,7 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
     public void clickMenuDrawer() {
         waitForElement(menuDrawerBtn, DEFAULT_TIME);
         click(menuDrawerBtn);
-        Logs.INFO("Menu buttn clicked");
+        Logs.INFO("Menu button clicked");
     }
 
     public void clickLoginSignUpBtn() {
@@ -153,12 +160,26 @@ public class MMT_Mobile_LoginAndSearch extends TestBase {
         Logs.INFO("Email entered for Login - " + testEmail);
     }
 
-    public void enterPassword(String password) {
-        waitForElement(mmtLoginViaPasswordButton, DEFAULT_TIME);
-        click(mmtLoginViaPasswordButton);
-        waitForElement(mmtEditText, DEFAULT_TIME);
-        enterText(mmtEditText, password);
-        Logs.INFO("Password entered for Login");
+    public boolean enterPassword(String password) {
+
+        waitForElement(resendOTPBtn, DEFAULT_TIME);
+        if(isDisplayed(mmtLoginViaPasswordButton)) {
+            waitForElement(mmtLoginViaPasswordButton, DEFAULT_TIME);
+            click(mmtLoginViaPasswordButton);
+            waitForElement(mmtEditText, DEFAULT_TIME);
+            enterText(mmtEditText, password);
+            Logs.INFO("Password entered for Login");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void waitTillSkipButtonEnablesAndClick() {
+        driver.navigate().back();
+        driver.navigate().back();
+        driver.navigate().back();
+        Logs.INFO("Login skipped");
     }
 
     public void clickContinueButton() {

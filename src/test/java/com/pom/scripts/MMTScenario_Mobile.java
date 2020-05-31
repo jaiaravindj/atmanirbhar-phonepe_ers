@@ -16,8 +16,8 @@ import com.pom.utilities.Logs;
 
 @Listeners(com.pom.utilities.TestListener.class)
 public class MMTScenario_Mobile extends TestBase {
+
 	HeadSpinHelper headSpinHelper;
-	
 	SoftAssert softAssert;
 	MMT_Mobile_LoginAndSearch mmt1;
 	MMT_Mobile_BookingFlow mmt2;
@@ -39,13 +39,16 @@ public class MMTScenario_Mobile extends TestBase {
 		Logs.INFO("LOGIN TO THE APP");
 		mmt1.dismissGLoginPopup();
 		mmt1.clickLoginSkipButtonp();
-//		mmt1.clickMenuDrawer();
-//		mmt1.clickLoginSignUpBtn();
+		mmt1.clickMenuDrawer();
+		mmt1.clickLoginSignUpBtn();
 
-//		mmt1.enterLoginEmail(readProp("username"));
-//		mmt1.clickContinueButton();
-//		mmt1.enterPassword(readProp("password"));
-//		mmt1.clickContinueButton();
+		mmt1.enterLoginEmail(readProp("username"));
+		mmt1.clickContinueButton();
+		if(mmt1.enterPassword(readProp("password"))) {
+			mmt1.clickContinueButton();
+		} else {
+			mmt1.waitTillSkipButtonEnablesAndClick();
+		}
 		mmt1.checkIfOnHomeScreen();
 
 		Logs.INFO("SEARCH HOTEL FOR GIVEN PARAMETERS");
