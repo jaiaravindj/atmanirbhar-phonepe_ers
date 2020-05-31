@@ -1,5 +1,14 @@
 package com.pom.pages;
 
+import java.security.PrivateKey;
+import java.util.*;
+
+import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.pagefactory.HowToUseLocators;
+import org.jsoup.select.Evaluator;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
 import io.appium.java_client.MobileElement;
@@ -12,91 +21,132 @@ import java.util.List;
 
 
 public class MMT_Mobile extends TestBase {
-    private String testEmail = "atmanirbhar.phonep.ers@gmail.com";
-    private String password = "Sumed@Jai123";
-
 
     @AndroidFindBy(id = "com.google.android.gms:id/cancel")
-    private MobileElement gLoginDismiss;
+    MobileElement gLoginDismiss;
+
     @AndroidFindBy(className = "android.widget.EditText")
-    private MobileElement mmtEditText;
+    MobileElement mmtEditText;
+
     @AndroidFindBy(id = "com.makemytrip:id/btn_continue")
-    private MobileElement mmtLoginContinueButton;
+    MobileElement mmtLoginContinueButton;
+
     @AndroidFindBy(id = "com.makemytrip:id/pwd_option")
-    private MobileElement mmtLoginViaPasswordButton;
+    MobileElement mmtLoginViaPasswordButton;
+
     @AndroidFindBy(id = "com.makemytrip:id/universal_search")
-    private MobileElement mmtUniversalSearchLayout;
+    MobileElement mmtUniversalSearchLayout;
+
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id='com.makemytrip:id/title' and @text='Hotels']")
-    private MobileElement mmtHotelsText;
+    MobileElement mmtHotelsText;
+
     @AndroidFindBy(id = "com.makemytrip:id/city")
-    private MobileElement mmtCityEditText;
+    MobileElement mmtCityEditText;
+
     @AndroidFindBy(xpath = "//androidx.recyclerview.widget.RecyclerView/android.widget.RelativeLayout[@index=0]/android.widget.TextView")
-    private MobileElement mmtCityListItem;
+    MobileElement mmtCityListItem;
+
     @AndroidFindBy(id = "com.makemytrip:id/checkIn_layout")
-    private MobileElement mmtCheckInLayout;
+    MobileElement mmtCheckInLayout;
+
     @AndroidFindBy(id = "com.makemytrip:id/checkOut_layout")
-    private MobileElement mmtCheckOutLayout;
+    MobileElement mmtCheckOutLayout;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvCheckInDate")
-    private MobileElement mmtCheckinDate;
+    MobileElement mmtCheckinDate;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvCheckInMonth")
-    private MobileElement mmtCheckinMonth;
+    MobileElement mmtCheckinMonth;
+
     @AndroidFindBy(id = "com.makemytrip:id/search_button")
-    private MobileElement mmtSearchButton;
+    MobileElement mmtSearchButton;
+
     @AndroidFindBy(id = "com.makemytrip:id/guest_layout")
-    private MobileElement mmtGuestLayout;
+    MobileElement mmtGuestLayout;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvadultcount")
-    private MobileElement mmtAdultCount;
+    MobileElement mmtAdultCount;
+
     @AndroidFindBy(id = "com.makemytrip:id/ivadultadd")
-    private MobileElement mmtAdultCountAdd;
+    MobileElement mmtAdultCountAdd;
+
     @AndroidFindBy(id = "com.makemytrip:id/ivadultsubtract")
-    private MobileElement mmtAdultCountSubtract;
+    MobileElement mmtAdultCountSubtract;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvchildcount")
-    private MobileElement mmtChildCount;
+    MobileElement mmtChildCount;
+
     @AndroidFindBy(id = "com.makemytrip:id/ivchildadd")
-    private MobileElement mmtChildCountAdd;
+    MobileElement mmtChildCountAdd;
+
     @AndroidFindBy(id = "com.makemytrip:id/ivchildsubtract")
-    private MobileElement mmtChildCountSubtract;
+    MobileElement mmtChildCountSubtract;
+
     @AndroidFindBy(id = "com.makemytrip:id/btn_add_room")
-    private MobileElement mmtAddRoom;
+    MobileElement mmtAddRoom;
+
     @AndroidFindBy(id = "com.makemytrip:id/btn_done")
-    private MobileElement mmtDoneButton;
+    MobileElement mmtDoneButton;
+
     @AndroidFindBy(id = "com.makemytrip:id/removeRoom_expanded")
-    private MobileElement mmtRoomRemove;
+    MobileElement mmtRoomRemove;
+
     @AndroidFindBy(id = "com.makemytrip:id/removeRoom_collapsed")
-    private List<MobileElement> mmtRoomRemoveList;
+    List<MobileElement> mmtRoomRemoveList;
 
     @AndroidFindBy(id = "com.makemytrip:id/cbAddOn")
-    private MobileElement mmtDonationCheckBox;
+    MobileElement mmtDonationCheckBox;
+
     @AndroidFindBy(id = "com.makemytrip:id/btnShowAllHotels")
-    private MobileElement mmtHotelsContinueButton;
+    MobileElement mmtHotelsContinueButton;
+
     @AndroidFindBy(id = "com.makemytrip:id/rl_bnpl_option")
-    private MobileElement mmtHotelsBnplPaymentOption;
+    MobileElement mmtHotelsBnplPaymentOption;
+
     @AndroidFindBy(id = "com.makemytrip:id/rb_pay_in_full")
-    private MobileElement mmtHotelsFullPaymentOption;
+    MobileElement mmtHotelsFullPaymentOption;
+
     @AndroidFindBy(id = "com.makemytrip:id/tv_proceed_payment")
-    private MobileElement mmtHotelsProceedPayment;
+    MobileElement mmtHotelsProceedPayment;
+
     @AndroidFindBy(id = "com.makemytrip:id/ivDetailExpandOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageDetailsExpand;
+    MobileElement mmtHotelsThankYouPageDetailsExpand;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvHotelNameOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageHotelName;
+    MobileElement mmtHotelsThankYouPageHotelName;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvHotelAddressOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageLocation;
+    MobileElement mmtHotelsThankYouPageLocation;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvReviewCheckInOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageCheckIn;
+    MobileElement mmtHotelsThankYouPageCheckIn;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageCheckOut;
+    MobileElement mmtHotelsThankYouPageCheckOut;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvCheckInDateOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageCheckInDate;
+    MobileElement mmtHotelsThankYouPageCheckInDate;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutDateOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageCheckOutDate;
+    MobileElement mmtHotelsThankYouPageCheckOutDate;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvCheckInTimeOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageCheckInTime;
+    MobileElement mmtHotelsThankYouPageCheckInTime;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvCheckOutTimeOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageCheckOutTime;
+    MobileElement mmtHotelsThankYouPageCheckOutTime;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvTotalRoomsBookedOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageRoomcount;
+    MobileElement mmtHotelsThankYouPageRoomcount;
+
     @AndroidFindBy(id = "com.makemytrip:id/tvNumOfGuestOnThankYouPage")
-    private MobileElement mmtHotelsThankYouPageGuestcount;
+    MobileElement mmtHotelsThankYouPageGuestcount;
+
+    @AndroidFindBy(id = "com.makemytrip:id/rv_bottom_bar")
+    MobileElement homePageBottomBar;
+
+    @AndroidFindBy(id = "com.makemytrip:id/room_count")
+    MobileElement hotelsRoomCount;
 
 
     public MMT_Mobile() {
@@ -105,66 +155,113 @@ public class MMT_Mobile extends TestBase {
         Logs.INFO("This is constructor - MMT");
     }
 
-    public void MMT_Login() {
+
+    public void dismissGLoginPopup() {
         if (!testbase.isDisplayed(mmtLoginContinueButton))
             return;
-        waitForElement(gLoginDismiss, 3);
+        waitForElement(gLoginDismiss, DEFAULT_TIME);
         click(gLoginDismiss);
-
-        enterText(mmtEditText, testEmail);
-        click(mmtLoginContinueButton);
-
-        click(mmtLoginViaPasswordButton);
-        enterText(mmtEditText, password);
-        click(mmtLoginContinueButton);
-        waitForElement(mmtUniversalSearchLayout, 3);
     }
 
-    public void MMT_Hotels_Select_City(String cityName) {
-        waitForElement(mmtHotelsText, 5);
+    public void enterLoginEmail(String testEmail) {
+        waitForElement(mmtEditText, DEFAULT_TIME);
+        enterText(mmtEditText, testEmail);
+        Logs.INFO("Email entered for Login");
+    }
+
+    public void enterPassword(String password) {
+        waitForElement(mmtLoginViaPasswordButton, DEFAULT_TIME);
+        click(mmtLoginViaPasswordButton);
+        waitForElement(mmtEditText, DEFAULT_TIME);
+        enterText(mmtEditText, password);
+        Logs.INFO("Password entered for Login");
+    }
+
+    public void clickContinueButton() {
+        waitForElement(mmtLoginContinueButton, DEFAULT_TIME);
+        click(mmtLoginContinueButton);
+        Logs.INFO(getText(mmtLoginContinueButton) + " button clicked");
+    }
+
+    public void goToHotelsSectino() {
+        waitForElement(mmtHotelsText, DEFAULT_TIME);
         click(mmtHotelsText);
-        waitForElement(mmtCityEditText, 5);
+        Logs.INFO("Password entered for Login");
+    }
+
+    public void selectCity(String cityName) {
+        waitForElement(mmtCityEditText, DEFAULT_TIME);
         click(mmtCityEditText);
         enterText(mmtEditText, cityName);
-        waitForElement(mmtCityListItem,5);
+        waitForElement(mmtCityListItem, DEFAULT_TIME);
         click(mmtCityListItem);
-        waitForElement(mmtGuestLayout, 5);
-
+        waitForElement(mmtGuestLayout, DEFAULT_TIME);
     }
 
-    public void MMT_Add_Guests(int noAdultGuests, int childGuests){
+    public String getSelectedCityName() {
+        waitForElement(mmtCityEditText, DEFAULT_TIME);
+        return getText(mmtCityEditText);
+    }
+
+    public void goToGuestPage() {
+        waitForElement(mmtGuestLayout, DEFAULT_TIME);
         click(mmtGuestLayout);
-        waitForElement(mmtAdultCount, 5);
+    }
 
-        if(mmtRoomRemoveList.size() > 1)
-            for(MobileElement removeBtn :mmtRoomRemoveList)
-                if(isDisplayed(removeBtn))
+    public void removeExistingGuest() {
+        waitForElement(mmtAdultCount, DEFAULT_TIME);
+
+        if (mmtRoomRemoveList.size() > 1)
+            for (MobileElement removeBtn : mmtRoomRemoveList)
+                if (isDisplayed(removeBtn))
                     click(removeBtn);
+    }
 
-        waitForElement(mmtAdultCount, 5);
-        setPassengerCount(mmtAdultCount,mmtAdultCountAdd,mmtAdultCountSubtract,noAdultGuests);
-        setPassengerCount(mmtChildCount,mmtChildCountAdd,mmtChildCountSubtract,childGuests);
+    public void setAduldGuest(int noAdultGuests) {
+        waitForElement(mmtAdultCount, DEFAULT_TIME);
+        setPassengerCount(mmtAdultCount, mmtAdultCountAdd, mmtAdultCountSubtract, noAdultGuests);
+    }
 
+    public void setChildGuest(int childGuests){
+        waitForElement(mmtChildCount, DEFAULT_TIME);
+        setPassengerCount(mmtChildCount, mmtChildCountAdd, mmtChildCountSubtract, childGuests);
+    }
+
+    public void addRoom() {
+        waitForElement(mmtAddRoom,DEFAULT_TIME);
         click(mmtAddRoom);
-        waitForElement(mmtAdultCount, 5);
-        setPassengerCount(mmtAdultCount,mmtAdultCountAdd,mmtAdultCountSubtract,noAdultGuests);
-        setPassengerCount(mmtChildCount,mmtChildCountAdd,mmtChildCountSubtract,childGuests);
-        click(mmtDoneButton);
+    }
 
+    public void clickDoneButton(){
+        waitForElement(mmtDoneButton,DEFAULT_TIME);
+        click(mmtDoneButton);
+    }
+
+    public void clickSearchButton() {
         waitForElement(mmtSearchButton, 5);
         click(mmtSearchButton);
     }
 
+    public String getGuestCount() {
+        waitForElement(mmtGuestLayout,DEFAULT_TIME);
+        return getText(mmtGuestLayout);
+    }
+
+    public String getRoomCount() {
+        waitForElement(hotelsRoomCount,DEFAULT_TIME);
+        return getText(hotelsRoomCount);
+    }
+
 
     // Will Add or Subtract guests count according to required number.
-    private void setPassengerCount(MobileElement locatorCount,MobileElement locatorAdd,MobileElement locatorSubtract,int totalPassenger) {
+    private void setPassengerCount(MobileElement locatorCount, MobileElement locatorAdd, MobileElement locatorSubtract, int totalPassenger) {
         int adultCount = Integer.parseInt(getText(locatorCount));
         if (adultCount > totalPassenger) {
             for (int i = 0; i < adultCount - totalPassenger; i++) {
                 click(locatorSubtract);
                 adultCount = Integer.parseInt(getText(locatorCount));
             }
-        } else if(adultCount < totalPassenger) {
+        } else if (adultCount < totalPassenger) {
             for (; adultCount <= totalPassenger; adultCount++) {
                 click(locatorAdd);
                 adultCount = Integer.parseInt(getText(locatorCount));
@@ -173,19 +270,24 @@ public class MMT_Mobile extends TestBase {
     }
 
     public void MMT_Payment() {
-        waitForElement(mmtDonationCheckBox,5);
-        if(isChecked(mmtDonationCheckBox))
+        waitForElement(mmtDonationCheckBox, 5);
+        if (isChecked(mmtDonationCheckBox))
             click(mmtDonationCheckBox);
         click(mmtHotelsContinueButton);
-        if(isDisplayed(mmtHotelsBnplPaymentOption))
+        if (isDisplayed(mmtHotelsBnplPaymentOption))
             click(mmtHotelsFullPaymentOption);
         click(mmtHotelsProceedPayment);
         click(mmtHotelsThankYouPageDetailsExpand);
     }
 
-    public void MMT_ThankYouPage_Assertions(String hotelName,String location){
+    public void MMT_ThankYouPage_Assertions(String hotelName, String location) {
         Assertion asserts = new Assertion();
-        asserts.assertEquals(hotelName,mmtHotelsThankYouPageHotelName.getText());
-        asserts.assertEquals(location,mmtHotelsThankYouPageLocation.getText());
+        asserts.assertEquals(hotelName, mmtHotelsThankYouPageHotelName.getText());
+        asserts.assertEquals(location, mmtHotelsThankYouPageLocation.getText());
+    }
+
+    public void checkIfOnHomeScreen() {
+        waitForElement(homePageBottomBar, DEFAULT_TIME);
+        Logs.INFO("User in Home Page");
     }
 }
