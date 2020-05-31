@@ -1,8 +1,9 @@
 package com.pom.scripts;
 
-
+import com.pom.utilities.HeadSpinHelper;
 import com.pom.pages.MMT_Mobile_LoginAndSearch;
 import com.pom.pages.MMT_Mobile_BookingFlow;
+
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -13,10 +14,9 @@ import org.testng.asserts.SoftAssert;
 import com.pom.framework.TestBase;
 import com.pom.utilities.Logs;
 
-
 @Listeners(com.pom.utilities.TestListener.class)
 public class MMTScenario_Mobile extends TestBase {
-	
+	HeadSpinHelper headSpinHelper;
 	
 	SoftAssert softAssert;
 	MMT_Mobile_LoginAndSearch mmt1;
@@ -24,7 +24,8 @@ public class MMTScenario_Mobile extends TestBase {
 	
 	@Parameters({"osType"})
 	@BeforeMethod
-	public void setUp(@Optional ("android") String osType) {
+	public void setUp(@Optional ("android") String osType) throws Exception {
+		headSpinHelper = new HeadSpinHelper();
 		invokeDriver(osType);
 		softAssert = new SoftAssert();
 		mmt1 = new MMT_Mobile_LoginAndSearch();
@@ -160,8 +161,5 @@ public class MMTScenario_Mobile extends TestBase {
 		Logs.INFO("***** Quitting Driver *****");
 		driver.quit();
 	}
-
-
-
 
 }
