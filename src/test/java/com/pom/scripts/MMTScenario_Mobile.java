@@ -45,7 +45,7 @@ public class MMTScenario_Mobile extends TestBase {
 
 		mmt2.clickOnGotItBtn();
 
-		Logs.INFO("SORT & FILTER ...");
+		Logs.INFO("SORT & FILTER");
 		mmt2.clickOnSortFilterBtn();
 		softAssert.assertTrue(mmt2.getActivityTitleText().contains(readProp("sortAndFilter")), "User on Sort & Filter page");
 		mmt2.setPriceRangeFilter(readProp("minPriceRange"));
