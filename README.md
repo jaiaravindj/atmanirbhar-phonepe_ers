@@ -25,7 +25,7 @@ Clone the Project as a Maven Project in IntelliJ from the Root Directory - 'atma
 
 ## config.Properties
 
-* androidDeviceName -> Give the deviceName from the HeadSpin
+* androidDeviceName -> Give the deviceName from the [HeadSpin](https://www.headspin.io)
 * appPackage -> Package name of the app under test
 * appActivity -> Launch Activity name of the app under test
 * serverUrl -> Give the serverUrl(driverUrl from HeadSpin) else the default is the localhost
