@@ -59,7 +59,7 @@ Further, select a room & capture all the data. Enter guest details & validate th
 ## Challenges
 
 * We had problems in login flow as most of the time the password button gets hidden as we are retrying the flow again and again. We have handled with and without password
-* Getting the state of the device in headSpin was something we expected. There was a work around given which we couldn't accomadate in the stipulated time.
+* Getting the state of the device in [HeadSpin](https://www.headspin.io) was something we expected. There was a work around given which we couldn't accomadate in the stipulated time.
 
 
 ## Built with
@@ -72,7 +72,3 @@ Further, select a room & capture all the data. Enter guest details & validate th
 
 * Jai Aravind [Senior SDET - PhonePe]
 * Sumed Khicha [Senior SDET]
-
-
-
-
